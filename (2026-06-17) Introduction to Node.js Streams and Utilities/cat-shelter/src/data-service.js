@@ -1,0 +1,41 @@
+import fs from 'fs/promises';
+
+async function getAllRecords (storagePath) {
+    const dataAsString = await fs.readFile(storagePath, 'utf-8');
+    return JSON.parse(dataAsString);
+}
+
+async function rewriteStorage (storagePath, data) {
+    const dataAsString = JSON.stringify(data, null, 4);
+    await fs.writeFile(storagePath, dataAsString, { encoding: 'utf-8' });
+}
+
+async function storeRecord (storagePath, recordToAdd) {
+    const data = await dataService.getAllRecords(storagePath);
+    data.push(recordToAdd);
+    await rewriteStorage(storagePath, data);
+}
+
+async function updateRecord (storagePath, updatePredicate, updatedRecord) {
+    const data = await dataService.getAllRecords(storagePath);
+    const recordToUpdate = data.find(updatePredicate);
+    
+    for (const key in updatedRecord) {
+        recordToUpdate[key] = updatedRecord[key];
+    }
+
+    await rewriteStorage(storagePath, data);
+}
+
+async function deleteRecord (storagePath, notToDeletePredicate) {
+    const dataBeforeDeletion = await dataService.getAllRecords(storagePath);
+    const dataAfterDeletion = dataBeforeDeletion.filter(notToDeletePredicate);
+    await rewriteStorage(storagePath, dataAfterDeletion);
+}
+
+export const dataService = {
+    getAllRecords,
+    storeRecord,
+    updateRecord,
+    deleteRecord
+};

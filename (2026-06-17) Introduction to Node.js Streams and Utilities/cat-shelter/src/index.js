@@ -1,5 +1,4 @@
 import http from 'http';
-import fs from 'fs/promises';
 import { serve } from './serve-file.js';
 
 const SERVER_PORT = 5500;

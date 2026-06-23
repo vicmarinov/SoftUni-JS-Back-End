@@ -9,7 +9,7 @@ const STYLESHEETS_PATHS = {
 };
 
 async function serveFile (res, filePath, contentType) {
-    const fileContent = await fs.readFile(filePath);
+    const fileContent = await fs.readFile(filePath, 'utf-8');
 
     res.writeHead(200, { 'content-type': contentType });
     res.write(fileContent);
