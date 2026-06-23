@@ -1,25 +1,20 @@
 import http from 'http';
 import fs from 'fs/promises';
+import { serve } from './serve-file.js';
 
 const SERVER_PORT = 5500;
 
 const server = http.createServer(async (req, res) => {
-    if (req.url === '/styles/site.css' && req.method === 'GET') {
-        const stylesheet = await fs.readFile('./styles/site.css');
+    if (req.method !== 'GET') return;
 
-        res.writeHead(200, { 'content-type': 'text/css' });
-        res.write(stylesheet);
+    if (req.url.startsWith('/styles/')) {
+        await serve.stylesheet(res, req.url);
         res.end();
         return;
     }
 
-    if (req.url === '/' && req.method === 'GET') {
-        const page = await fs.readFile('./views/homepage.html');
-
-        res.writeHead(200, { 'content-type': 'text/html' });
-        res.write(page);
-        res.end();
-    }
+    await serve.page(res, req.url);
+    res.end();
 });
 
 server.listen(SERVER_PORT, () => {
