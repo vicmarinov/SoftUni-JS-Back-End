@@ -3,6 +3,7 @@ import { generateHTMLContent } from './generate-html-content.js';
 
 const PAGES_PATHS = {
     homepage: './views/homepage.html',
+    addBreed: './views/add-breed.html',
     notFound: './views/not-found.html'
 };
 
@@ -38,9 +39,8 @@ async function servePage (res, endpoint) {
                 await generateHTMLContent.homepage()
             ]
         );
-    } else {
-        pagePath = PAGES_PATHS.notFound;
-    }
+    } else if (endpoint === '/cats/add-breed') pagePath = PAGES_PATHS.addBreed;
+    else pagePath = PAGES_PATHS.notFound;
 
     await serveFile(res, pagePath, 'text/html', placeholdersToReplace);
 }
