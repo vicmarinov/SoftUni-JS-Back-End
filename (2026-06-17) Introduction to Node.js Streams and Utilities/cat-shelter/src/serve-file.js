@@ -4,6 +4,7 @@ import { generateHTMLContent } from './generate-html-content.js';
 const PAGES_PATHS = {
     homepage: './views/homepage.html',
     addBreed: './views/add-breed.html',
+    addCat: './views/add-cat.html',
     notFound: './views/not-found.html'
 };
 
@@ -39,7 +40,17 @@ async function servePage (res, endpoint) {
                 await generateHTMLContent.homepage()
             ]
         );
-    } else if (endpoint === '/cats/add-breed') pagePath = PAGES_PATHS.addBreed;
+    }
+    else if (endpoint === '/cats/add-breed') pagePath = PAGES_PATHS.addBreed;
+    else if (endpoint === '/cats/add-cat') {
+        pagePath = PAGES_PATHS.addCat;
+        placeholdersToReplace.push(
+            [
+                '{{Breed items}}',
+                await generateHTMLContent.breedOptions()
+            ]
+        );
+    }
     else pagePath = PAGES_PATHS.notFound;
 
     await serveFile(res, pagePath, 'text/html', placeholdersToReplace);

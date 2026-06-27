@@ -25,12 +25,12 @@ async function getCatById (catId) {
     return catData;
 }
 
-async function addNewCat (name, description, imageUrl, breedName) {
+async function addNewCat (name, description, imageURL, breedName) {
     const catData = {
         id: createNewUUID(),
         name: name ?? null,
         description: description ?? null,
-        imageUrl: imageUrl ?? null,
+        imageURL: imageURL ?? null,
         breedId: (await breedService.getBreedByName(breedName)).id ?? null
     };
 
@@ -48,7 +48,7 @@ async function updateCat (
         id: catId,
         name: newName ?? null,
         description: newDescription ?? null,
-        imageUrl: newImageURL ?? null,
+        imageURL: newImageURL ?? null,
         breedId: await breedService.getBreedByName(newBreedName).id ?? null
     };
 

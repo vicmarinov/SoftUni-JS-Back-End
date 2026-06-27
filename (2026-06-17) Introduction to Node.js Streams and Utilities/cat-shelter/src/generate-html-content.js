@@ -1,3 +1,4 @@
+import { breedService } from './breed-service.js';
 import { catService } from './cat-service.js';
 
 async function generateHomepageContent () {
@@ -19,6 +20,15 @@ async function generateHomepageContent () {
         .join('\n');
 }
 
+async function generateBreedOptions () {
+    const allBreedsData = await breedService.getAllBreeds();
+
+    return allBreedsData
+        .map(breedData => `<option value="${breedData.name}">${breedData.name}</option>`)
+        .join('\n');
+}
+
 export const generateHTMLContent = {
-    homepage: generateHomepageContent
+    homepage: generateHomepageContent,
+    breedOptions: generateBreedOptions
 };
