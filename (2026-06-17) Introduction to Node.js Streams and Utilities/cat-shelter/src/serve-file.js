@@ -12,16 +12,23 @@ const STYLESHEETS_PATHS = {
     '/styles/site.css': './styles/site.css'
 };
 
+const JPEG_IMAGES_PATHS = {
+    '/assets/no-image-available.jpg': './assets/no-image-available.jpg'
+};
+
 async function serveFile (
     res,
     filePath,
     contentType,
-    placeholdersToReplace = []
+    placeholdersToReplace = [],
+    encoding = 'utf-8'
 ) {
-    let fileContent = await fs.readFile(filePath, 'utf-8');
+    let fileContent = await fs.readFile(filePath, encoding);
 
-    for (const [placeholder, value] of placeholdersToReplace) {
-        fileContent = fileContent.replaceAll(placeholder, value);
+    if (encoding === 'utf-8') {
+        for (const [placeholder, value] of placeholdersToReplace) {
+            fileContent = fileContent.replaceAll(placeholder, value);
+        }
     }
 
     res.writeHead(200, { 'content-type': contentType });
@@ -68,7 +75,20 @@ async function serveStylesheet (res, endpoint) {
     await serveFile(res, stylesheetPath, 'text/css');
 }
 
+async function serveJPEGImage (res, endpoint) {
+    const imagePath = JPEG_IMAGES_PATHS[endpoint];
+
+    if (!imagePath) {
+        res.writeHead(404, { 'content-type': 'text/plain' });
+        res.write('404 Image Not Found');
+        return;
+    }
+
+    await serveFile(res, imagePath, 'image/jpeg', null, null);
+}
+
 export const serve = {
     page: servePage,
-    stylesheet: serveStylesheet
+    stylesheet: serveStylesheet,
+    JPEGImage: serveJPEGImage
 };

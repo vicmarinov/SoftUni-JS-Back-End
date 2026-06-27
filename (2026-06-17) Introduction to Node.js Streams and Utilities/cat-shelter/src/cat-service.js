@@ -8,6 +8,11 @@ async function getAllCats () {
     const catsData = await dataService.getAllRecords(CATS_STORAGE_PATH);
 
     for (const catRecord of catsData) {
+        if (!catRecord.breedId) {
+            catRecord.breedName = null;
+            continue;
+        }
+        
         const catBreed = await breedService.getBreedById(catRecord.breedId);
         catRecord.breedName = catBreed.name;
     }
@@ -28,10 +33,10 @@ async function getCatById (catId) {
 async function addNewCat (name, description, imageURL, breedName) {
     const catData = {
         id: createNewUUID(),
-        name: name ?? null,
-        description: description ?? null,
-        imageURL: imageURL ?? null,
-        breedId: (await breedService.getBreedByName(breedName)).id ?? null
+        name: name || null,
+        description: description || null,
+        imageURL: imageURL || null,
+        breedId: (await breedService.getBreedByName(breedName))?.id || null
     };
 
     await dataService.storeRecord(CATS_STORAGE_PATH, catData);
@@ -46,10 +51,10 @@ async function updateCat (
 ) {
     const updatedCatData = {
         id: catId,
-        name: newName ?? null,
-        description: newDescription ?? null,
-        imageURL: newImageURL ?? null,
-        breedId: await breedService.getBreedByName(newBreedName).id ?? null
+        name: newName || null,
+        description: newDescription || null,
+        imageURL: newImageURL || null,
+        breedId: await breedService.getBreedByName(newBreedName)?.id || null
     };
 
     await dataService.updateRecord(

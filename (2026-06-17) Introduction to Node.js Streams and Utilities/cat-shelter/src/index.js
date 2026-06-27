@@ -27,8 +27,19 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    if (req.method !== 'GET') {
+        res.end();
+        return;
+    }
+
     if (req.url.startsWith('/styles/')) {
         await serve.stylesheet(res, req.url);
+        res.end();
+        return;
+    }
+
+    if (req.url.startsWith('/assets/')) {
+        await serve.JPEGImage(res, req.url);
         res.end();
         return;
     }

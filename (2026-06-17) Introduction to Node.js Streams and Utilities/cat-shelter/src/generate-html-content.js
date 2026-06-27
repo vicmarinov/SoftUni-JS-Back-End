@@ -7,10 +7,18 @@ async function generateHomepageContent () {
     return allCatsData
         .map(catData => `
             <li>
-                <img src="${catData.imageURL}">
-                <h3>${catData.name}</h3>
-                <p><span>Breed: </span>${catData.breedName}</p>
-                <p><span>Description: </span>${catData.description}</p>
+                <img src="${catData.imageURL ?? '/assets/no-image-available.jpg'}">
+                <h3>${catData.name ?? 'Unnamed Cat'}</h3>
+                ${
+                    catData.breedName
+                    ? `<p><span>Breed: </span>${catData.breedName}</p>`
+                    : ''
+                }
+                ${
+                    catData.description
+                    ? `<p><span>Description: </span>${catData.description}</p>`
+                    : ''
+                }
                 <ul class="buttons">
                     <li class="btn edit"><a href="/cats/edit/${catData.id}">Change Info</a></li>
                     <li class="btn delete"><a href="/cats/shelter/${catData.id}">New Home</a></li>
