@@ -22,11 +22,7 @@ async function getAllCats () {
 
 async function getCatById (catId) {
     const allCatsData = await catService.getAllCats();
-    
     const catData = allCatsData.find(catData => catData.id === catId);
-    const catBreed = await breedService.getBreedById(catData.breedId);
-    catData.breedName = catBreed.name;
-
     return catData;
 }
 
@@ -54,7 +50,7 @@ async function updateCat (
         name: newName || null,
         description: newDescription || null,
         imageURL: newImageURL || null,
-        breedId: await breedService.getBreedByName(newBreedName)?.id || null
+        breedId: (await breedService.getBreedByName(newBreedName))?.id || null
     };
 
     await dataService.updateRecord(

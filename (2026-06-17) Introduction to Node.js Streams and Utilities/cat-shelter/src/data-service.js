@@ -19,6 +19,7 @@ async function storeRecord (storagePath, recordToAdd) {
 async function updateRecord (storagePath, updatePredicate, updatedRecord) {
     const data = await dataService.getAllRecords(storagePath);
     const recordToUpdate = data.find(updatePredicate);
+    if (!recordToUpdate) throw new Error(`Cannot find a record in ${storagePath} that is matching this update predicate: ${updatePredicate.toString()}`);
     
     for (const key in updatedRecord) {
         recordToUpdate[key] = updatedRecord[key];

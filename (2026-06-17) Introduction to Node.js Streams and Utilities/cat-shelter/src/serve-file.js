@@ -5,6 +5,7 @@ const PAGES_PATHS = {
     homepage: './views/homepage.html',
     addBreed: './views/add-breed.html',
     addCat: './views/add-cat.html',
+    editCat: './views/edit-cat.html',
     notFound: './views/not-found.html'
 };
 
@@ -57,6 +58,31 @@ async function servePage (res, endpoint) {
                 await generateHTMLContent.breedOptions()
             ]
         );
+    }
+    else if (endpoint.startsWith('/cats/edit/')) {
+        const endpointRegEx = /^\/cats\/edit\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
+        
+        let isOK = true;
+
+        if (!endpointRegEx.test(endpoint)) isOK = false;
+        const catId = endpoint.match(endpointRegEx)?.groups.catId;
+
+        let editCatFormHTML;
+        try {
+            editCatFormHTML = await generateHTMLContent.editCatForm(catId);
+        } catch (error) {
+            isOK = false;
+        }
+
+        if (isOK) {
+            pagePath = PAGES_PATHS.editCat;
+            placeholdersToReplace.push(
+                [
+                    '{{Edit cat form}}',
+                    editCatFormHTML
+                ]
+            );
+        } else pagePath = PAGES_PATHS.notFound;
     }
     else pagePath = PAGES_PATHS.notFound;
 

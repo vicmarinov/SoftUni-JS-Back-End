@@ -27,6 +27,34 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    if (req.method === 'POST' && req.url.startsWith('/cats/edit/')) {
+        const endpointRegEx = /^\/cats\/edit\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
+        const catId = req.url.match(endpointRegEx)?.groups.catId;
+        if (!catId) {
+            res.writeHead(303, { location: `/404-not-found` });
+            res.end();
+            return;
+        }
+
+        const newCatData = await readFormData(req);
+
+        try {
+            await catService.updateCat(
+                catId,
+                newCatData.name,
+                newCatData.description,
+                newCatData.imageURL,
+                newCatData.breedName
+            );
+
+            res.writeHead(303, { location: `/` }).end();
+        } catch (error) {
+            res.writeHead(303, { location: `/404-not-found` }).end();
+        }
+
+        return;
+    }
+
     if (req.method !== 'GET') {
         res.end();
         return;
