@@ -64,9 +64,9 @@ async function updateCat (
 }
 
 async function deleteCat (catId) {
-    await dataService.deleteRecord(
+    await dataService.deleteRecords(
         CATS_STORAGE_PATH,
-        catRecord => catRecord.id !== catId
+        catRecord => catRecord.id === catId
     );
 }
 

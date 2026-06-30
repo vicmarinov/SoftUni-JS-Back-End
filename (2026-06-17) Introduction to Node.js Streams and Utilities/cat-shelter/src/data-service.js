@@ -28,12 +28,14 @@ async function updateRecord (storagePath, updatePredicate, updatedRecord) {
     await rewriteStorage(storagePath, data);
 }
 
-async function deleteRecord (storagePath, notToDeletePredicate) {
+async function deleteRecords (storagePath, deletePredicate) {
     const dataBeforeDeletion = await dataService.getAllRecords(storagePath);
-    const dataAfterDeletion = dataBeforeDeletion.filter(notToDeletePredicate);
+    const dataAfterDeletion = dataBeforeDeletion.filter(
+        (data) => !deletePredicate(data)
+    );
 
     if (dataBeforeDeletion.length === dataAfterDeletion.length) {
-        throw new Error(`There are not records to delete in ${storagePath} that are not matching this not to delete predicate: ${notToDeletePredicate.toString()}`);
+        throw new Error(`There are no records to delete in ${storagePath} that are matching this delete predicate: ${deletePredicate.toString()}`);
     }
 
     await rewriteStorage(storagePath, dataAfterDeletion);
@@ -43,5 +45,5 @@ export const dataService = {
     getAllRecords,
     storeRecord,
     updateRecord,
-    deleteRecord
+    deleteRecords
 };
