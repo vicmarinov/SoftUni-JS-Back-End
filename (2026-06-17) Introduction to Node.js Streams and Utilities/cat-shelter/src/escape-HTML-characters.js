@@ -1,4 +1,6 @@
 export function escapeHTMLCharacters (text) {
+    if (!text) return text;
+    
     const escapeCharacters = {
         '&': '&amp;',
         '<': '&lt;',
