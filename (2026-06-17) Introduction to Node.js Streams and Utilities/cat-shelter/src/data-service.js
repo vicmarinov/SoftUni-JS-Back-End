@@ -31,6 +31,11 @@ async function updateRecord (storagePath, updatePredicate, updatedRecord) {
 async function deleteRecord (storagePath, notToDeletePredicate) {
     const dataBeforeDeletion = await dataService.getAllRecords(storagePath);
     const dataAfterDeletion = dataBeforeDeletion.filter(notToDeletePredicate);
+
+    if (dataBeforeDeletion.length === dataAfterDeletion.length) {
+        throw new Error(`There are not records to delete in ${storagePath} that are not matching this not to delete predicate: ${notToDeletePredicate.toString()}`);
+    }
+
     await rewriteStorage(storagePath, dataAfterDeletion);
 }
 

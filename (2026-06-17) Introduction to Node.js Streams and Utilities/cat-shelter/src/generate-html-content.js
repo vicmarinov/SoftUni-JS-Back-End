@@ -84,8 +84,45 @@ async function generateEditCatForm (catId) {
     `;
 }
 
+async function generateShelterCatForm (catId) {
+    const catData = await catService.getCatById(catId);
+    if (!catData) throw new Error(`There is no cat with id ${catId}`);
+
+    return `
+        <form action="/cats/shelter/${catId}" method="post" class="cat-form">
+            <h2>Shelter the cat</h2>
+
+            <img src="${catData.imageURL ?? '/assets/no-image-available.jpg'}">
+
+            <label for="name">Name</label>
+            <input name="name" type="text" id="name" value="${catData.name ?? 'Unnamed Cat'}" disabled>
+
+            ${
+                catData.description
+                ? `
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" disabled>${catData.description}</textarea>
+                ` : ''
+            }
+
+            ${
+                catData.breedName
+                ? `
+                    <label for="group">Breed</label>
+                    <select name="breedName" id="group" disabled>
+                        <option value="${catData.breedName}">${catData.breedName}</option>
+                    </select>
+                ` : ''
+            }
+
+            <button type="submit">SHELTER THE CAT</button>
+        </form>
+    `;
+}
+
 export const generateHTMLContent = {
     homepage: generateHomepageContent,
     breedOptions: generateBreedOptions,
-    editCatForm: generateEditCatForm
+    editCatForm: generateEditCatForm,
+    shelterCatForm: generateShelterCatForm
 };

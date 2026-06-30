@@ -6,6 +6,7 @@ const PAGES_PATHS = {
     addBreed: './views/add-breed.html',
     addCat: './views/add-cat.html',
     editCat: './views/edit-cat.html',
+    shelterCat: './views/shelter-cat.html',
     notFound: './views/not-found.html'
 };
 
@@ -80,6 +81,31 @@ async function servePage (res, endpoint) {
                 [
                     '{{Edit cat form}}',
                     editCatFormHTML
+                ]
+            );
+        } else pagePath = PAGES_PATHS.notFound;
+    }
+    else if (endpoint.startsWith('/cats/shelter/')) {
+        const endpointRegEx = /^\/cats\/shelter\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
+
+        let isOK = true;
+
+        if (!endpointRegEx.test(endpoint)) isOK = false;
+        const catId = endpoint.match(endpointRegEx)?.groups.catId;
+
+        let shelterCatFormHTML;
+        try {
+            shelterCatFormHTML = await generateHTMLContent.shelterCatForm(catId);
+        } catch (error) {
+            isOK = false;
+        }
+
+        if (isOK) {
+            pagePath = PAGES_PATHS.shelterCat;
+            placeholdersToReplace.push(
+                [
+                    '{{Shelter cat form}}',
+                    shelterCatFormHTML
                 ]
             );
         } else pagePath = PAGES_PATHS.notFound;
