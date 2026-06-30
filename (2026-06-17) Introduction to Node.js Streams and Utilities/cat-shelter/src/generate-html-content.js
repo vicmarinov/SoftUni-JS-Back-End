@@ -1,8 +1,15 @@
 import { breedService } from './breed-service.js';
 import { catService } from './cat-service.js';
 
-async function generateHomepageContent () {
-    const allCatsData = await catService.getAllCats();
+async function generateHomepageContent (filterValue) {
+    const allCatsData = filterValue
+        ? await catService.getAllCats(
+            (catData) => {
+                return catData.name?.includes(filterValue) ||
+                       catData.description?.includes(filterValue);
+            }
+        )
+        : await catService.getAllCats();
 
     return allCatsData
         .map(catData => `

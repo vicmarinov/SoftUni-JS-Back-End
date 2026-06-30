@@ -4,8 +4,11 @@ import { v4 as createNewUUID } from 'uuid';
 
 const CATS_STORAGE_PATH = './data/cats.json';
 
-async function getAllCats () {
-    const catsData = await dataService.getAllRecords(CATS_STORAGE_PATH);
+async function getAllCats (filterPredicate = () => true) {
+    const catsData = await dataService.getAllRecords(
+        CATS_STORAGE_PATH,
+        filterPredicate
+    );
 
     for (const catRecord of catsData) {
         if (!catRecord.breedId) {

@@ -50,6 +50,19 @@ async function servePage (res, endpoint) {
             ]
         );
     }
+    else if (endpoint.startsWith('/search')) {
+        const searchedValue = new URLSearchParams(
+            endpoint.split('?')[1]
+        ).get('value');
+
+        pagePath = PAGES_PATHS.homepage;
+        placeholdersToReplace.push(
+            [
+                '{{Cat items}}',
+                await generateHTMLContent.homepage(searchedValue)
+            ]
+        );
+    }
     else if (endpoint === '/cats/add-breed') pagePath = PAGES_PATHS.addBreed;
     else if (endpoint === '/cats/add-cat') {
         pagePath = PAGES_PATHS.addCat;

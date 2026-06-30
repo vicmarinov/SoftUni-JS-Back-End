@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 
-async function getAllRecords (storagePath) {
+async function getAllRecords (storagePath, filterPredicate = () => true) {
     const dataAsString = await fs.readFile(storagePath, 'utf-8');
-    return JSON.parse(dataAsString);
+    return JSON.parse(dataAsString).filter(filterPredicate);
 }
 
 async function rewriteStorage (storagePath, data) {
