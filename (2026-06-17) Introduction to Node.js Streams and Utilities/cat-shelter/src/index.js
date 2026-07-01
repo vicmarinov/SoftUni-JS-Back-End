@@ -3,6 +3,7 @@ import { serve } from './serve-file.js';
 import { breedService } from './breed-service.js';
 import { readFormData } from './read-form-data.js';
 import { catService } from './cat-service.js';
+import { ROUTE_PATTERNS } from './route-patterns.js';
 
 const SERVER_PORT = 5500;
 
@@ -28,8 +29,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === 'POST' && req.url.startsWith('/cats/edit/')) {
-        const endpointRegEx = /^\/cats\/edit\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
-        const catId = req.url.match(endpointRegEx)?.groups.catId;
+        const catId = req.url.match(ROUTE_PATTERNS.editCat)?.groups.catId;
         if (!catId) {
             res.writeHead(303, { location: `/404-not-found` });
             res.end();
@@ -56,8 +56,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === 'POST' && req.url.startsWith('/cats/shelter/')) {
-        const endpointRegEx = /^\/cats\/shelter\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
-        const catId = req.url.match(endpointRegEx)?.groups.catId;
+        const catId = req.url.match(ROUTE_PATTERNS.shelterCat)?.groups.catId;
         if (!catId) {
             res.writeHead(303, { location: `/404-not-found` });
             res.end();

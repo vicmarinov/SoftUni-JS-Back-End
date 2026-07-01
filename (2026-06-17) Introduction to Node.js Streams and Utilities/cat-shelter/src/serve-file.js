@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import { generateHTMLContent } from './generate-html-content.js';
+import { ROUTE_PATTERNS } from './route-patterns.js';
 
 const PAGES_PATHS = {
     homepage: './views/homepage.html',
@@ -74,12 +75,10 @@ async function servePage (res, endpoint) {
         );
     }
     else if (endpoint.startsWith('/cats/edit/')) {
-        const endpointRegEx = /^\/cats\/edit\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
-        
         let isOK = true;
 
-        if (!endpointRegEx.test(endpoint)) isOK = false;
-        const catId = endpoint.match(endpointRegEx)?.groups.catId;
+        if (!ROUTE_PATTERNS.editCat.test(endpoint)) isOK = false;
+        const catId = endpoint.match(ROUTE_PATTERNS.editCat)?.groups.catId;
 
         let editCatFormHTML;
         try {
@@ -99,12 +98,10 @@ async function servePage (res, endpoint) {
         } else pagePath = PAGES_PATHS.notFound;
     }
     else if (endpoint.startsWith('/cats/shelter/')) {
-        const endpointRegEx = /^\/cats\/shelter\/(?<catId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i;
-
         let isOK = true;
 
-        if (!endpointRegEx.test(endpoint)) isOK = false;
-        const catId = endpoint.match(endpointRegEx)?.groups.catId;
+        if (!ROUTE_PATTERNS.shelterCat.test(endpoint)) isOK = false;
+        const catId = endpoint.match(ROUTE_PATTERNS.shelterCat)?.groups.catId;
 
         let shelterCatFormHTML;
         try {
