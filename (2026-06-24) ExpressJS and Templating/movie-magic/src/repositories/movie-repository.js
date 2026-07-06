@@ -18,4 +18,4 @@ async function getAllMovies () {
 
 export const movieRepository = {
     getAll: getAllMovies
-}
+};
