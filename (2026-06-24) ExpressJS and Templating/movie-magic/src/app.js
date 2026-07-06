@@ -15,7 +15,7 @@ app.use(express.static('./src/public'));
 
 // Setup routes
 app.get('/', (req, res) => {
-    res.render('homepage', { layout: false });
+    res.render('homepage');
 });
 
 // Start the server
