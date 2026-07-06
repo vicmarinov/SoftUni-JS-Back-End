@@ -4,6 +4,8 @@ const SERVER_PORT = 5500;
 
 const app = express();
 
+app.use(express.static('./src/public'));
+
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
