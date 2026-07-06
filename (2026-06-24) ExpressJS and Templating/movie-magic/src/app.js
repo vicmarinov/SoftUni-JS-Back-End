@@ -1,5 +1,6 @@
 import express from 'express';
 import { engine as handlebarsEngine } from 'express-handlebars';
+import routes from './routes.js';
 
 const SERVER_PORT = 5500;
 
@@ -14,9 +15,7 @@ app.set('views', './src/views');
 app.use(express.static('./src/public'));
 
 // Setup routes
-app.get('/', (req, res) => {
-    res.render('homepage');
-});
+app.use(routes);
 
 // Start the server
 app.listen(SERVER_PORT, () => {
