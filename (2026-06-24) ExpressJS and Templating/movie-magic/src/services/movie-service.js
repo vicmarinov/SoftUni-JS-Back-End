@@ -5,6 +5,12 @@ async function getAllMovies () {
     return movies;
 }
 
+async function getMovieById (movieId) {
+    const movie = await movieRepository.getById(movieId);
+    return movie;
+}
+
 export const movieService = {
-    getAll: getAllMovies
+    getAll: getAllMovies,
+    getById: getMovieById
 };

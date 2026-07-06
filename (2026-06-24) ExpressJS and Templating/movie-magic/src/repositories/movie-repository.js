@@ -16,6 +16,13 @@ async function getAllMovies () {
     return movies;
 }
 
+async function getMovieById (movieId) {
+    const allMovies = await movieRepository.getAll();
+    const movie = allMovies.find(movie => movie.id === movieId);
+    return movie;
+}
+
 export const movieRepository = {
-    getAll: getAllMovies
+    getAll: getAllMovies,
+    getById: getMovieById
 };
