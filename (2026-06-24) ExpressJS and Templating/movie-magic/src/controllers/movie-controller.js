@@ -23,6 +23,12 @@ movieController.post('/create', async (req, res) => {
     res.redirect('/');
 });
 
+movieController.get('/search', async (req, res) => {
+    const filters = req.query;
+    const movies = await movieService.getAll(filters);
+    res.render('movies/search', { filters, movies });
+});
+
 movieController.get('/:movieId', async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const ratingStarsString = '&#x2605;'.repeat(Math.trunc(movie.rating));

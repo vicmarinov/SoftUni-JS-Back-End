@@ -17,8 +17,18 @@ async function writeDatabase (database) {
     await fs.writeFile('./src/database.json', content, { encoding: 'utf-8' });
 }
 
-async function getAllMovies () {
-    const movies = await readDatabase('movies');
+async function getAllMovies (filters) {
+    let movies = await readDatabase('movies');
+
+    for (const parameter in filters) {
+        movies = movies.filter(movie => {
+            if (!parameter) return true;
+
+            const movieValue = movie[parameter].toString().toLowerCase();
+            const filterValue = filters[parameter].toString().toLowerCase();
+            return movieValue.includes(filterValue);
+        });
+    }
     return movies;
 }
 

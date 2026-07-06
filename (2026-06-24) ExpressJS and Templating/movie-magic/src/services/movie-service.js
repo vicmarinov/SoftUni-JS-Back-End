@@ -8,8 +8,8 @@ const MOVIE_CATEGORIES = {
     "short-film": "Short Film"
 };
 
-async function getAllMovies () {
-    const movies = await movieRepository.getAll();
+async function getAllMovies (filters) {
+    const movies = await movieRepository.getAll(filters);
     return movies;
 }
 
