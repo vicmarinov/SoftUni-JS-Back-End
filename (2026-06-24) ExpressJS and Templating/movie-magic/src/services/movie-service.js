@@ -1,5 +1,13 @@
 import { movieRepository } from '../repositories/movie-repository.js';
 
+const MOVIE_CATEGORIES = {
+    "tv-show": "TV Show",
+    "animation": "Animation",
+    "movie": "Movie",
+    "documentary": "Documentary",
+    "short-film": "Short Film"
+};
+
 async function getAllMovies () {
     const movies = await movieRepository.getAll();
     return movies;
@@ -10,7 +18,32 @@ async function getMovieById (movieId) {
     return movie;
 }
 
+async function createMovie (
+    title,
+    category,
+    genre,
+    director,
+    year,
+    imageURL,
+    rating,
+    description
+) {
+    const newMovie = {
+        title,
+        category: MOVIE_CATEGORIES[category],
+        genre,
+        director,
+        year: Number(year),
+        imageURL,
+        rating: Number(rating),
+        description
+    };
+
+    await movieRepository.create(newMovie);
+}
+
 export const movieService = {
     getAll: getAllMovies,
-    getById: getMovieById
+    getById: getMovieById,
+    crate: createMovie
 };
