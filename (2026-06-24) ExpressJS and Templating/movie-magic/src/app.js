@@ -1,15 +1,24 @@
 import express from 'express';
+import { engine as handlebarsEngine } from 'express-handlebars';
 
 const SERVER_PORT = 5500;
 
 const app = express();
 
+// Setup Handlebars
+app.engine('hbs', handlebarsEngine({ extname: 'hbs' }));
+app.set('view engine', 'hbs');
+app.set('views', './src/views');
+
+// Setup static assets
 app.use(express.static('./src/public'));
 
+// Setup routes
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+    res.render('homepage', { layout: false });
 });
 
+// Start the server
 app.listen(SERVER_PORT, () => {
-    console.log(`Server is running on http://localhost:${SERVER_PORT}`);
+    console.log(`Server is listening on http://localhost:${SERVER_PORT}`);
 });
