@@ -1,29 +1,21 @@
-import fs from 'fs/promises';
 import { prisma } from '../lib/prisma.js';
 
-async function readDatabase (collectionName) {
-    const content = await fs.readFile('./src/database.json');
-    const database = JSON.parse(content);
+async function getAllMovies (filters = {}) {
+    const movies = await prisma.movie.findMany({
+        where: {
+            title: {
+                contains: filters.title || undefined,
+                mode: 'insensitive'
+            },
+            genre: {
+                contains: filters.genre || undefined,
+                mode: 'insensitive'
+            },
+            year: filters.year && Number.isInteger(Number(filters.year)) ?
+                Number(filters.year) : undefined
+        }
+    });
 
-    if (collectionName && !(collectionName in database)) {
-        throw new Error(`Cannot find a collection with name "${collectionName} in the database"`);
-    }
-
-    return collectionName ? database[collectionName] : database;
-}
-
-async function getAllMovies (filters) {
-    let movies = await readDatabase('movies');
-
-    for (const parameter in filters) {
-        movies = movies.filter(movie => {
-            if (!parameter) return true;
-
-            const movieValue = movie[parameter].toString().toLowerCase();
-            const filterValue = filters[parameter].toString().toLowerCase();
-            return movieValue.includes(filterValue);
-        });
-    }
     return movies;
 }
 
