@@ -11,10 +11,12 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/src/app.js",
+            "runtimeExecutable": "npx",
             "runtimeArgs": [
+                "tsx",
                 "--watch"
-            ]
+            ],
+            "program": "${workspaceFolder}/src/app.js"
         }
     ]
 }
