@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { movieService } from '../services/movie-service.js';
 
-const movieController = new Router();
+const movieController = Router();
 
 movieController.get('/create', (req, res) => {
     res.render('movies/create', { pageTitle: 'Add Movie Post' });
