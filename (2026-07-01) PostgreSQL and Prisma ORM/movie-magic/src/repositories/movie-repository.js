@@ -28,8 +28,12 @@ async function getAllMovies (filters) {
 }
 
 async function getMovieById (movieId) {
-    const allMovies = await movieRepository.getAll();
-    const movie = allMovies.find(movie => movie.id === movieId);
+    const movie = await prisma.movie.findUnique({
+        where: {
+            id: movieId
+        }
+    });
+
     return movie;
 }
 
