@@ -25,6 +25,8 @@ model Movie {
   cratedAt    DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  cast MovieCast[]
+
   @@map("movies")
 }
 
@@ -37,5 +39,22 @@ model Actor {
   cratedAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  filmography MovieCast[]
+
   @@map("actors")
+}
+
+model MovieCast {
+  movieId   String
+  actorId   String
+  roleName  String
+  cratedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  movie Movie @relation(fields: [movieId], references: [id])
+  actor Actor @relation(fields: [actorId], references: [id])
+
+  @@id([movieId, actorId])
+
+  @@map("movie_cast")
 }
