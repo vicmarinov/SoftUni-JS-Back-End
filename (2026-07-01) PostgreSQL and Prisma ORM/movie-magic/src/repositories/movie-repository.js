@@ -34,8 +34,15 @@ async function createMovie (newMovie) {
     await prisma.movie.create({ data: newMovie });
 }
 
+async function attachActorToMovieCast (movieId, actorId, roleName) {
+    await prisma.movieCast.create({
+        data: { movieId, actorId, roleName }
+    });
+}
+
 export const movieRepository = {
     getAll: getAllMovies,
     getById: getMovieById,
-    create: createMovie
+    create: createMovie,
+    attachToCast: attachActorToMovieCast
 };

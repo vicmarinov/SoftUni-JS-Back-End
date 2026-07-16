@@ -36,6 +36,14 @@ movieController.get('/:movieId/attach-actor', async (req, res) => {
     res.render('movies/attach-actor', { pageTitle: movie.title, movie, actors });
 });
 
+movieController.post('/:movieId/attach-actor', async (req, res) => {
+    const movieId = req.params.movieId;
+    const { actor: actorId, roleName } = req.body;
+
+    await movieService.attachToCast(movieId, actorId, roleName);
+    res.redirect(`/movies/${movieId}`);
+});
+
 movieController.get('/:movieId', async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const ratingStarsString = '&#x2605;'.repeat(Math.trunc(movie.rating));

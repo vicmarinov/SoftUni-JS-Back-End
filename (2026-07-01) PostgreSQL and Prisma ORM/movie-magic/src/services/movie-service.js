@@ -42,8 +42,13 @@ async function createMovie (
     await movieRepository.create(newMovie);
 }
 
+async function attachActorToMovieCast (movieId, actorId, roleName) {
+    await movieRepository.attachToCast(movieId, actorId, roleName);
+}
+
 export const movieService = {
     getAll: getAllMovies,
     getById: getMovieById,
-    crate: createMovie
+    crate: createMovie,
+    attachToCast: attachActorToMovieCast
 };

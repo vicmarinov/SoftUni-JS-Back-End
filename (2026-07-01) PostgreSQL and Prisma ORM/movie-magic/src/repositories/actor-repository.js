@@ -3,7 +3,7 @@ import { prisma } from '../lib/prisma.js';
 async function getAllActors (excludeActors) {
     const actors = await prisma.actor.findMany({
         where: {
-            id: { notIn: excludeActors }
+            id: { notIn: excludeActors.map(actor => actor.actorId) }
         }
     });
 
