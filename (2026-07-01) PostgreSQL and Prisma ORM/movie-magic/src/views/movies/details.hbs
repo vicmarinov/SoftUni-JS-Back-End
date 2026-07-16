@@ -29,4 +29,19 @@
             <img src="{{movie.imageURL}}" alt="{{movie.title}}">
         </div>
     </div>
+    <div class="main-cast-card">
+        {{#each movie.cast as |castMember|}}
+            <div class="cast-card">
+                <div class="card-img">
+                    <img src="{{castMember.actor.imageURL}}" alt="{{castMember.actor.name}}">
+                </div>
+                <div class="cast-info">
+                    <h1>{{castMember.actor.name}}</h1>
+                    <h3>Age: {{castMember.actor.age}}</h3>
+                    <h3>Place of Birth: {{castMember.actor.placeOfBirth}}</h3>
+                    <h3>Role in Movie: {{castMember.roleName}}</h3>
+                </div>
+            </div>
+        {{/each}}
+    </div>
 </section>

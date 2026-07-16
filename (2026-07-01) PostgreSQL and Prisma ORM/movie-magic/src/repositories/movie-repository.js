@@ -24,7 +24,11 @@ async function getMovieById (movieId) {
         where: {
             id: movieId
         },
-        include: { cast: true }
+        include: {
+            cast: {
+                include: { actor: true }
+            }
+        }
     });
 
     return movie;
