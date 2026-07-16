@@ -23,7 +23,8 @@ async function getMovieById (movieId) {
     const movie = await prisma.movie.findUnique({
         where: {
             id: movieId
-        }
+        },
+        include: { cast: true }
     });
 
     return movie;
