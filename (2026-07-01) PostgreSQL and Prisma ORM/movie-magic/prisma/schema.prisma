@@ -22,7 +22,7 @@ model Movie {
   imageURL    String
   rating      Float
   description String
-  cratedAt    DateTime @default(now())
+  createdAt    DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   cast MovieCast[]
@@ -36,7 +36,7 @@ model Actor {
   age          Int
   placeOfBirth String
   imageURL     String
-  cratedAt     DateTime @default(now())
+  createdAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   filmography MovieCast[]
@@ -48,7 +48,7 @@ model MovieCast {
   movieId   String
   actorId   String
   roleName  String
-  cratedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   movie Movie @relation(fields: [movieId], references: [id])

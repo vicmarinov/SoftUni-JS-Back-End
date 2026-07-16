@@ -49,6 +49,6 @@ async function attachActorToMovieCast (movieId, actorId, roleName) {
 export const movieService = {
     getAll: getAllMovies,
     getById: getMovieById,
-    crate: createMovie,
+    create: createMovie,
     attachToCast: attachActorToMovieCast
 };

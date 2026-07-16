@@ -10,7 +10,7 @@ movieController.get('/create', (req, res) => {
 
 movieController.post('/create', async (req, res) => {
     const newMovie = req.body;
-    await movieService.crate(
+    await movieService.create(
         newMovie.title,
         newMovie.category,
         newMovie.genre,
