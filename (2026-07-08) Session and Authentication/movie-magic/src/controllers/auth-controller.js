@@ -1,0 +1,22 @@
+import { Router } from 'express';
+import { authService } from '../services/auth-service.js';
+
+const authController = Router();
+
+authController.get('/register', (req, res) => {
+    res.render('auth/register', { pageTitle: 'Register' });
+});
+
+authController.post('/register', async (req, res) => {
+    const newUser = req.body;
+    const authToken = await authService.register(
+        newUser.email,
+        newUser.password,
+        newUser.repeatPassword
+    );
+
+    res.cookie('authToken', authToken);
+    res.redirect('/');
+});
+
+export default authController;
