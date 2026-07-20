@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from 'express';
 import { engine as handlebarsEngine } from 'express-handlebars';
 import routes from './routes.js';
