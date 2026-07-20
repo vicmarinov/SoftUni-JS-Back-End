@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import JSONWebToken from 'jsonwebtoken';
 import { userRepository } from '../repositories/user-repository.js';
+import { generateAuthToken } from '../utils/tokenUtils.js';
 
 async function registerUser (email, password, repeatPassword) {
     if (password !== repeatPassword) {
@@ -12,18 +12,22 @@ async function registerUser (email, password, repeatPassword) {
     const user = { email, passwordHash };
     const createdUser = await userRepository.create(user);
 
-    const authToken = JSONWebToken.sign(
-        {
-            userId: createdUser.id,
-            email: createdUser.email
-        },
-        process.env.JSON_WEB_TOKEN_SECRET,
-        { expiresIn: '1h' }
-    );
-    
+    const authToken = generateAuthToken(createdUser.id, createdUser.email);
+    return authToken;
+}
+
+async function loginUser (email, password) {
+    const user = await userRepository.getByEmail(email);
+    if (!user) throw new Error('Invalid email or password');
+
+    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isPasswordValid) throw new Error('Invalid email or password');
+
+    const authToken = generateAuthToken(user.id, user.email);
     return authToken;
 }
 
 export const authService = {
-    register: registerUser
+    register: registerUser,
+    login: loginUser
 };

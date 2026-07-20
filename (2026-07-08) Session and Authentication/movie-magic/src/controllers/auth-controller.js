@@ -20,4 +20,15 @@ authController.post('/register', authGuard.isGuest, async (req, res) => {
     res.redirect('/');
 });
 
+authController.get('/login', authGuard.isGuest, (req, res) => {
+    res.render('auth/login', { pageTitle: 'Login' });
+});
+
+authController.post('/login', authGuard.isGuest, async (req, res) => {
+    const { email, password } = req.body;
+    const authToken = await authService.login(email, password);
+    res.cookie('authToken', authToken);
+    res.redirect('/');
+});
+
 export default authController;
