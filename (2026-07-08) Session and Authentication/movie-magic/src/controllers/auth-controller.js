@@ -31,4 +31,9 @@ authController.post('/login', authGuard.isGuest, async (req, res) => {
     res.redirect('/');
 });
 
+authController.get('/logout', authGuard.isAuth, (req, res) => {
+    res.clearCookie('authToken');
+    res.redirect('/');
+});
+
 export default authController;
