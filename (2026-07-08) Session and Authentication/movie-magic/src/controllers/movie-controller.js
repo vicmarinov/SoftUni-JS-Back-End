@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import { movieService } from '../services/movie-service.js';
 import { actorService } from '../services/actor-service.js';
+import { authGuard } from '../middlewares/auth-middleware.js';
 
 const movieController = Router();
 
-movieController.get('/create', (req, res) => {
+movieController.get('/create', authGuard.isAuth, (req, res) => {
     res.render('movies/create', { pageTitle: 'Add Movie Post' });
 });
 
-movieController.post('/create', async (req, res) => {
+movieController.post('/create', authGuard.isAuth, async (req, res) => {
     const newMovie = req.body;
     await movieService.create(
         newMovie.title,
@@ -30,13 +31,13 @@ movieController.get('/search', async (req, res) => {
     res.render('movies/search', { pageTitle: 'Search Movies', filters, movies });
 });
 
-movieController.get('/:movieId/attach-actor', async (req, res) => {
+movieController.get('/:movieId/attach-actor', authGuard.isAuth, async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const actors = await actorService.getAll(movie.cast);
     res.render('movies/attach-actor', { pageTitle: movie.title, movie, actors });
 });
 
-movieController.post('/:movieId/attach-actor', async (req, res) => {
+movieController.post('/:movieId/attach-actor', authGuard.isAuth, async (req, res) => {
     const movieId = req.params.movieId;
     const { actor: actorId, roleName } = req.body;
 

@@ -2,6 +2,8 @@ import "dotenv/config";
 import express from 'express';
 import { engine as handlebarsEngine } from 'express-handlebars';
 import routes from './routes.js';
+import cookieParser from 'cookie-parser';
+import { authMiddleware } from './middlewares/auth-middleware.js';
 
 const SERVER_PORT = 5500;
 
@@ -17,6 +19,12 @@ app.use(express.static('./src/public'));
 
 // Setup body parser
 app.use(express.urlencoded());
+
+// Setup cookie parser
+app.use(cookieParser());
+
+// Setup authentication middleware
+app.use(authMiddleware);
 
 // Setup routes
 app.use(routes);

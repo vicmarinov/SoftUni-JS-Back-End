@@ -11,20 +11,20 @@
             <nav>
                 <img src="/img/logo.webp" alt="logo">
 
-                {{!-- TODO: implement dynamic nav menu items --}}
                 <ul class="menu">
                     <li><a href="/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/movies/search">Search</a></li>
-                    <!--Users-->
-                    <li><a href="/movies/create">Create Post</a></li>
-                    <li><a href="/actors/create">Create Actor</a></li>
-                    <li><a href="/auth/logout">Logout</a></li>
-                    <!--Guest-->
-                    <li><a href="/auth/login">Login</a></li>
-                    <li><a href="/auth/register">Register</a></li>
+                    {{#if user}}
+                        <li><a href="/movies/create">Create Post</a></li>
+                        <li><a href="/actors/create">Create Actor</a></li>
+                        <li><a href="/auth/logout">Logout</a></li>
+                        <li>{{user.email}}</li>
+                    {{else}}
+                        <li><a href="/auth/login">Login</a></li>
+                        <li><a href="/auth/register">Register</a></li>
+                    {{/if}}
                 </ul>
-
             </nav>
 
             <main>
