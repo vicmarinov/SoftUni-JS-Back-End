@@ -51,10 +51,20 @@ async function editMovie (movieId, creatorId, editedFields) {
     });
 }
 
+async function deleteMovie (movieId, creatorId) {
+    await prisma.movie.delete({
+        where: {
+            id: movieId,
+            createdBy: creatorId
+        }
+    });
+}
+
 export const movieRepository = {
     getAll: getAllMovies,
     getById: getMovieById,
     create: createMovie,
     attachToCast: attachActorToMovieCast,
-    edit: editMovie
+    edit: editMovie,
+    delete: deleteMovie
 };

@@ -74,10 +74,15 @@ async function editMovie (
     await movieRepository.edit(movieId, creatorId, editedFields);
 }
 
+async function deleteMovie (movieId, creatorId) {
+    await movieRepository.delete(movieId, creatorId);
+}
+
 export const movieService = {
     getAll: getAllMovies,
     getById: getMovieById,
     create: createMovie,
     attachToCast: attachActorToMovieCast,
-    edit: editMovie
+    edit: editMovie,
+    delete: deleteMovie
 };

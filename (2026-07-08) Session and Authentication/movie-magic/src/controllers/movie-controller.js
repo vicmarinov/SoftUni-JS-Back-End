@@ -87,6 +87,14 @@ movieController.post('/:movieId/edit', authGuard.isAuth, async (req, res) => {
     res.redirect(`/movies/${movieId}`);
 });
 
+movieController.get('/:movieId/delete', authGuard.isAuth, async (req, res) => {
+    const movieId = req.params.movieId;
+    const userId = req.user.id;
+
+    await movieService.delete(movieId, userId);
+    res.redirect('/');
+});
+
 movieController.get('/:movieId', async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const ratingStarsString = '&#x2605;'.repeat(Math.trunc(movie.rating));
