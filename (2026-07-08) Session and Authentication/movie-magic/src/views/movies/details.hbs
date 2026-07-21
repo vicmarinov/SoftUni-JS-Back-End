@@ -17,11 +17,12 @@
 
                 <p class="disc">Description: {{movie.description}}</p>
                 <p class="card-category">Category: {{movie.category}}</p>
-                
             </div>
 
-            <div class="social-btn centered">
-                <a href="/movies/{{movie.id}}/attach-actor" class="edit-btn">Attach to the Cast</a>
+            <div class="details-btn">
+                <a id="attach-button" href="/movies/{{movie.id}}/attach-actor">Attach Cast</a>
+                <a id="edit-button" href="/movies/{{movie.id}}/edit">Edit</a>
+                <a id="delete-button" href="/movies/{{movie.id}}/delete">Delete</a>
             </div>
         </div>
 
@@ -41,6 +42,10 @@
                     <h3>Place of Birth: {{castMember.actor.placeOfBirth}}</h3>
                     <h3>Role in Movie: {{castMember.roleName}}</h3>
                 </div>
+            </div>
+        {{else}}
+            <div class="no-cast">
+                <p>There are no casts added yet...</p>
             </div>
         {{/each}}
     </div>
