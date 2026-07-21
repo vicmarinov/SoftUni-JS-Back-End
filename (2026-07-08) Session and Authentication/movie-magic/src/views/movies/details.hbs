@@ -19,11 +19,13 @@
                 <p class="card-category">Category: {{movie.category}}</p>
             </div>
 
-            <div class="details-btn">
-                <a id="attach-button" href="/movies/{{movie.id}}/attach-actor">Attach Cast</a>
-                <a id="edit-button" href="/movies/{{movie.id}}/edit">Edit</a>
-                <a id="delete-button" href="/movies/{{movie.id}}/delete">Delete</a>
-            </div>
+            {{#if isUserCreatorOfMovie}}
+                <div class="details-btn">
+                    <a id="attach-button" href="/movies/{{movie.id}}/attach-actor">Attach Cast</a>
+                    <a id="edit-button" href="/movies/{{movie.id}}/edit">Edit</a>
+                    <a id="delete-button" href="/movies/{{movie.id}}/delete">Delete</a>
+                </div>
+            {{/if}}
         </div>
 
         <div class="card_right">

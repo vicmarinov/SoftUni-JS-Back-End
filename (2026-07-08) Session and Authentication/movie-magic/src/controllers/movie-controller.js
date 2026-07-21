@@ -48,7 +48,17 @@ movieController.post('/:movieId/attach-actor', authGuard.isAuth, async (req, res
 movieController.get('/:movieId', async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const ratingStarsString = '&#x2605;'.repeat(Math.trunc(movie.rating));
-    res.render('movies/details', { pageTitle: movie.title, movie, ratingStarsString });
+    const isUserCreatorOfMovie = !!req.user && req.user.id === movie.createdBy;
+    
+    res.render(
+        'movies/details',
+        {
+            pageTitle: movie.title,
+            movie,
+            ratingStarsString,
+            isUserCreatorOfMovie
+        }
+    );
 });
 
 export default movieController;
