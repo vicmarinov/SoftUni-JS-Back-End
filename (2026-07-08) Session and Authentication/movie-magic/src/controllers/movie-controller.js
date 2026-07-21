@@ -1,12 +1,15 @@
 import { Router } from 'express';
-import { movieService } from '../services/movie-service.js';
+import { MOVIE_CATEGORIES, movieService } from '../services/movie-service.js';
 import { actorService } from '../services/actor-service.js';
 import { authGuard } from '../middlewares/auth-middleware.js';
 
 const movieController = Router();
 
 movieController.get('/create', authGuard.isAuth, (req, res) => {
-    res.render('movies/create', { pageTitle: 'Add Movie Post' });
+    const movieCategoriesList = Object.entries(MOVIE_CATEGORIES)
+        .map(([code, title]) => ({ code, title }));
+    
+    res.render('movies/create', { pageTitle: 'Add Movie Post', movieCategoriesList });
 });
 
 movieController.post('/create', authGuard.isAuth, async (req, res) => {

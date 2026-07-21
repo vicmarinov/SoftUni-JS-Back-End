@@ -1,6 +1,6 @@
 import { movieRepository } from '../repositories/movie-repository.js';
 
-const MOVIE_CATEGORIES = {
+export const MOVIE_CATEGORIES = {
     "tv-show": "TV Show",
     "animation": "Animation",
     "movie": "Movie",
