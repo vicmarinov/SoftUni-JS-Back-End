@@ -13,7 +13,7 @@ datasource db {
 }
 
 model Movie {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   title       String
   category    String
   genre       String
@@ -22,24 +22,26 @@ model Movie {
   imageURL    String
   rating      Float
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
-  cast MovieCast[]
+  creator     User?       @relation(fields: [createdBy], references: [id])
+  cast        MovieCast[]
 
   @@map("movies")
 }
 
 model Actor {
-  id           String   @id @default(cuid())
+  id           String      @id @default(cuid())
   name         String
   age          Int
   placeOfBirth String
   imageURL     String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
-  filmography MovieCast[]
+  filmography  MovieCast[]
 
   @@map("actors")
 }
@@ -51,11 +53,11 @@ model MovieCast {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  movie Movie @relation(fields: [movieId], references: [id])
-  actor Actor @relation(fields: [actorId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  actor     Actor    @relation(fields: [actorId], references: [id])
 
   @@id([movieId, actorId])
-  
+
   @@map("movie_cast")
 }
 
@@ -65,6 +67,8 @@ model User {
   passwordHash String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  movies       Movie[]
 
   @@map("users")
 }
