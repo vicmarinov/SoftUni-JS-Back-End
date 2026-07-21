@@ -50,6 +50,22 @@ movieController.post('/:movieId/attach-actor', authGuard.isAuth, async (req, res
     res.redirect(`/movies/${movieId}`);
 });
 
+movieController.get('/:movieId/edit', authGuard.isAuth, async (req, res) => {
+    const movie = await movieService.getById(req.params.movieId);
+    if (req.user.id !== movie.createdBy) {
+        throw new Error('You are not authorized to edit this movie post!');
+    }
+
+    const movieCategoriesList = Object.entries(MOVIE_CATEGORIES)
+        .map(([code, title]) => ({
+            code,
+            title,
+            isSelected: title === movie.category
+        }));
+
+    res.render('movies/edit', { pageTitle: 'Edit Movie Post', movie, movieCategoriesList });
+});
+
 movieController.get('/:movieId', async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const ratingStarsString = '&#x2605;'.repeat(Math.trunc(movie.rating));
