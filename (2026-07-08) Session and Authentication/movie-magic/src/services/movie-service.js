@@ -48,9 +48,36 @@ async function attachActorToMovieCast (movieId, actorId, roleName) {
     await movieRepository.attachToCast(movieId, actorId, roleName);
 }
 
+async function editMovie (
+    movieId,
+    creatorId,
+    newTitle,
+    newCategory,
+    newGenre,
+    newDirector,
+    newYear,
+    newImageURL,
+    newRating,
+    newDescription
+) {
+    const editedFields = {};
+    
+    if (newTitle) editedFields.title = newTitle;
+    if (newCategory) editedFields.category = MOVIE_CATEGORIES[newCategory];
+    if (newGenre) editedFields.genre = newGenre;
+    if (newDirector) editedFields.director = newDirector;
+    if (newYear) editedFields.year = Number(newYear);
+    if (newImageURL) editedFields.imageURL = newImageURL;
+    if (newRating) editedFields.rating = Number(newRating);
+    if (newDescription) editedFields.description = newDescription;
+
+    await movieRepository.edit(movieId, creatorId, editedFields);
+}
+
 export const movieService = {
     getAll: getAllMovies,
     getById: getMovieById,
     create: createMovie,
-    attachToCast: attachActorToMovieCast
+    attachToCast: attachActorToMovieCast,
+    edit: editMovie
 };

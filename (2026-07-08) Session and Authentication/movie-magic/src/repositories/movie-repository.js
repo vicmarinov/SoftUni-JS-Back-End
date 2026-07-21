@@ -44,9 +44,17 @@ async function attachActorToMovieCast (movieId, actorId, roleName) {
     });
 }
 
+async function editMovie (movieId, creatorId, editedFields) {
+    await prisma.movie.update({
+        where: { id: movieId, createdBy: creatorId },
+        data: editedFields
+    });
+}
+
 export const movieRepository = {
     getAll: getAllMovies,
     getById: getMovieById,
     create: createMovie,
-    attachToCast: attachActorToMovieCast
+    attachToCast: attachActorToMovieCast,
+    edit: editMovie
 };

@@ -66,6 +66,27 @@ movieController.get('/:movieId/edit', authGuard.isAuth, async (req, res) => {
     res.render('movies/edit', { pageTitle: 'Edit Movie Post', movie, movieCategoriesList });
 });
 
+movieController.post('/:movieId/edit', authGuard.isAuth, async (req, res) => {
+    const movieId = req.params.movieId;
+    const userId = req.user.id;
+    const newMovieData = req.body;
+
+    await movieService.edit(
+        movieId,
+        userId,
+        newMovieData.title,
+        newMovieData.category,
+        newMovieData.genre,
+        newMovieData.director,
+        newMovieData.year,
+        newMovieData.imageURL,
+        newMovieData.rating,
+        newMovieData.description
+    );
+    
+    res.redirect(`/movies/${movieId}`);
+});
+
 movieController.get('/:movieId', async (req, res) => {
     const movie = await movieService.getById(req.params.movieId);
     const ratingStarsString = '&#x2605;'.repeat(Math.trunc(movie.rating));
