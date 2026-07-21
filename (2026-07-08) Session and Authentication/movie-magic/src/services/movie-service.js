@@ -26,7 +26,8 @@ async function createMovie (
     year,
     imageURL,
     rating,
-    description
+    description,
+    creatorId
 ) {
     const newMovie = {
         title,
@@ -36,7 +37,8 @@ async function createMovie (
         year: Number(year),
         imageURL,
         rating: Number(rating),
-        description
+        description,
+        createdBy: creatorId
     };
 
     await movieRepository.create(newMovie);

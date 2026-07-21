@@ -11,6 +11,7 @@ movieController.get('/create', authGuard.isAuth, (req, res) => {
 
 movieController.post('/create', authGuard.isAuth, async (req, res) => {
     const newMovie = req.body;
+    const userId = req.user.id;
     await movieService.create(
         newMovie.title,
         newMovie.category,
@@ -19,7 +20,8 @@ movieController.post('/create', authGuard.isAuth, async (req, res) => {
         newMovie.year,
         newMovie.imageURL,
         newMovie.rating,
-        newMovie.description
+        newMovie.description,
+        userId
     );
 
     res.redirect('/');
