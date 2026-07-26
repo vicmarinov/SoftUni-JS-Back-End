@@ -1,0 +1,54 @@
+<section id="details-page">
+    <div class="main_card">
+        <div class="card_left">
+            <div class="card_datails">
+                <h1>{{movie.title}}</h1>
+
+                <div class="card-movie">
+                    <div class="first-info">
+                        <p class="card-genre">Genre: {{movie.genre}}</p>
+                        <p class="card-director">Director: {{movie.director}}</p>
+                    </div>
+                    <div class="second-info">
+                        <p class="card-year">Year: {{movie.year}}</p>
+                        <p class="card-ranking">Rating: <span id="stars">{{{ratingStarsString}}}</span></p>
+                    </div>
+                </div>
+
+                <p class="disc">Description: {{movie.description}}</p>
+                <p class="card-category">Category: {{movie.category}}</p>
+            </div>
+
+            {{#if isUserCreatorOfMovie}}
+                <div class="details-btn">
+                    <a id="attach-button" href="/movies/{{movie.id}}/attach-actor">Attach Cast</a>
+                    <a id="edit-button" href="/movies/{{movie.id}}/edit">Edit</a>
+                    <a id="delete-button" href="/movies/{{movie.id}}/delete">Delete</a>
+                </div>
+            {{/if}}
+        </div>
+
+        <div class="card_right">
+            <img src="{{movie.imageURL}}" alt="{{movie.title}}">
+        </div>
+    </div>
+    <div class="main-cast-card">
+        {{#each movie.cast as |castMember|}}
+            <div class="cast-card">
+                <div class="card-img">
+                    <img src="{{castMember.actor.imageURL}}" alt="{{castMember.actor.name}}">
+                </div>
+                <div class="cast-info">
+                    <h1>{{castMember.actor.name}}</h1>
+                    <h3>Age: {{castMember.actor.age}}</h3>
+                    <h3>Place of Birth: {{castMember.actor.placeOfBirth}}</h3>
+                    <h3>Role in Movie: {{castMember.roleName}}</h3>
+                </div>
+            </div>
+        {{else}}
+            <div class="no-cast">
+                <p>There are no casts added yet...</p>
+            </div>
+        {{/each}}
+    </div>
+</section>

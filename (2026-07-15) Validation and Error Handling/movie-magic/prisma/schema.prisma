@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Movie {
+  id          String      @id @default(cuid())
+  title       String
+  category    String
+  genre       String
+  director    String
+  year        Int
+  imageURL    String
+  rating      Float
+  description String
+  createdBy   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  creator     User?       @relation(fields: [createdBy], references: [id])
+  cast        MovieCast[]
+
+  @@map("movies")
+}
+
+model Actor {
+  id           String      @id @default(cuid())
+  name         String
+  age          Int
+  placeOfBirth String
+  imageURL     String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  filmography  MovieCast[]
+
+  @@map("actors")
+}
+
+model MovieCast {
+  movieId   String
+  actorId   String
+  roleName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  actor     Actor    @relation(fields: [actorId], references: [id])
+
+  @@id([movieId, actorId])
+
+  @@map("movie_cast")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  movies       Movie[]
+
+  @@map("users")
+}
