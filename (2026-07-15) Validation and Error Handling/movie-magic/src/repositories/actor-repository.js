@@ -11,7 +11,11 @@ async function getAllActors (excludeActors = []) {
 }
 
 async function createActor (newActor) {
-    await prisma.actor.create({ data: newActor });
+    try {
+        await prisma.actor.create({ data: newActor });
+    } catch (error) {
+        throw new Error('Failed to create actor');
+    }
 }
 
 export const actorRepository = {

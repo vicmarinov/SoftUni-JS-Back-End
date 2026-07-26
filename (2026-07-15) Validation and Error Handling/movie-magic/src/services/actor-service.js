@@ -6,7 +6,7 @@ async function getAllActors (excludeActors) {
 }
 
 async function createActor ({ name, age, placeOfBirth, imageURL }) {
-    const newActor = { name, age: Number(age), placeOfBirth, imageURL };
+    const newActor = { name, age, placeOfBirth, imageURL };
     await actorRepository.create(newActor);
 }
 

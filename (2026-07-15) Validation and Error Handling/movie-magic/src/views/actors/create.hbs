@@ -11,19 +11,51 @@
             <ul class="noBullet">
                 <li>
                     <label for="name">Name:</label>
-                    <input type="text" class="inputFields" id="name" name="name">
+                    <input type="text" class="inputFields" id="name" name="name" value="{{actorData.name}}">
+
+                    {{#if fieldErrorMessages.name}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.name as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="age">Age:</label>
-                    <input type="number" class="inputFields" id="age" name="age">
+                    <input type="number" class="inputFields" id="age" name="age" value="{{actorData.age}}">
+
+                    {{#if fieldErrorMessages.age}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.age as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="placeOfBirth">Place of Birth:</label>
-                    <input type="text" class="inputFields" id="placeOfBirth" name="placeOfBirth">
+                    <input type="text" class="inputFields" id="placeOfBirth" name="placeOfBirth" value="{{actorData.placeOfBirth}}">
+
+                    {{#if fieldErrorMessages.placeOfBirth}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.placeOfBirth as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="image">Actor Image:</label>
-                    <input type="text" class="inputFields" id="image" name="imageURL">
+                    <input type="text" class="inputFields" id="image" name="imageURL" value="{{actorData.imageURL}}">
+
+                    {{#if fieldErrorMessages.imageURL}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.imageURL as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li id="center-btn">
                     <button id="create-btn" type="submit">Add Actor</button>
