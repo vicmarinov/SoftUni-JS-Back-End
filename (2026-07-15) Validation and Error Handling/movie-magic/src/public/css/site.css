@@ -156,6 +156,11 @@ footer {
     animation-fill-mode: forwards;
 }
 
+.input-field-errors {
+    color: #a50000;
+    font-weight: bold;
+}
+
 @keyframes cssAnimation {
     to {
         width: 0;

@@ -28,6 +28,12 @@
             </nav>
 
             <main>
+                {{#if notificationErrorMessage}}
+                    <div class="error-container">
+                        <p>{{notificationErrorMessage}}</p>
+                    </div>
+                {{/if}}
+                
                 {{{body}}}
             </main>
             
