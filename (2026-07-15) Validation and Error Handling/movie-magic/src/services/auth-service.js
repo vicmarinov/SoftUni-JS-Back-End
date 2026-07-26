@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { userRepository } from '../repositories/user-repository.js';
 import { generateAuthToken } from '../utils/tokenUtils.js';
 
-async function registerUser (email, password, repeatPassword) {
+async function registerUser ({ email, password, repeatPassword }) {
     if (password !== repeatPassword) {
         throw new Error('Passwords do not match');
     }
@@ -16,7 +16,7 @@ async function registerUser (email, password, repeatPassword) {
     return authToken;
 }
 
-async function loginUser (email, password) {
+async function loginUser ({ email, password }) {
     const user = await userRepository.getByEmail(email);
     if (!user) throw new Error('Invalid email or password');
 

@@ -10,12 +10,7 @@ actorController.get('/create', authGuard.isAuth, (req, res) => {
 
 actorController.post('/create', authGuard.isAuth, async (req, res) => {
     const newActor = req.body;
-    await actorService.create(
-        newActor.name,
-        newActor.age,
-        newActor.placeOfBirth,
-        newActor.imageURL
-    );
+    await actorService.create(newActor);
 
     res.redirect('/');
 });

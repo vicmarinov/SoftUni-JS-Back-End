@@ -15,17 +15,7 @@ movieController.get('/create', authGuard.isAuth, (req, res) => {
 movieController.post('/create', authGuard.isAuth, async (req, res) => {
     const newMovie = req.body;
     const userId = req.user.id;
-    await movieService.create(
-        newMovie.title,
-        newMovie.category,
-        newMovie.genre,
-        newMovie.director,
-        newMovie.year,
-        newMovie.imageURL,
-        newMovie.rating,
-        newMovie.description,
-        userId
-    );
+    await movieService.create(newMovie, userId);
 
     res.redirect('/');
 });
@@ -71,19 +61,7 @@ movieController.post('/:movieId/edit', authGuard.isAuth, async (req, res) => {
     const userId = req.user.id;
     const newMovieData = req.body;
 
-    await movieService.edit(
-        movieId,
-        userId,
-        newMovieData.title,
-        newMovieData.category,
-        newMovieData.genre,
-        newMovieData.director,
-        newMovieData.year,
-        newMovieData.imageURL,
-        newMovieData.rating,
-        newMovieData.description
-    );
-    
+    await movieService.edit(movieId, userId, newMovieData);
     res.redirect(`/movies/${movieId}`);
 });
 

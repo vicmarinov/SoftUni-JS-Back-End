@@ -19,14 +19,16 @@ async function getMovieById (movieId) {
 }
 
 async function createMovie (
-    title,
-    category,
-    genre,
-    director,
-    year,
-    imageURL,
-    rating,
-    description,
+    {
+        title,
+        category,
+        genre,
+        director,
+        year,
+        imageURL,
+        rating,
+        description,
+    },
     creatorId
 ) {
     const newMovie = {
@@ -51,14 +53,16 @@ async function attachActorToMovieCast (movieId, actorId, roleName) {
 async function editMovie (
     movieId,
     creatorId,
-    newTitle,
-    newCategory,
-    newGenre,
-    newDirector,
-    newYear,
-    newImageURL,
-    newRating,
-    newDescription
+    {
+        newTitle,
+        newCategory,
+        newGenre,
+        newDirector,
+        newYear,
+        newImageURL,
+        newRating,
+        newDescription
+    }
 ) {
     const editedFields = {};
     

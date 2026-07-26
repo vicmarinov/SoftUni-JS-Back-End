@@ -10,12 +10,7 @@ authController.get('/register', authGuard.isGuest, (req, res) => {
 
 authController.post('/register', authGuard.isGuest, async (req, res) => {
     const newUser = req.body;
-    const authToken = await authService.register(
-        newUser.email,
-        newUser.password,
-        newUser.repeatPassword
-    );
-
+    const authToken = await authService.register(newUser);
     res.cookie('authToken', authToken);
     res.redirect('/');
 });
@@ -25,8 +20,8 @@ authController.get('/login', authGuard.isGuest, (req, res) => {
 });
 
 authController.post('/login', authGuard.isGuest, async (req, res) => {
-    const { email, password } = req.body;
-    const authToken = await authService.login(email, password);
+    const userData = req.body;
+    const authToken = await authService.login(userData);
     res.cookie('authToken', authToken);
     res.redirect('/');
 });
