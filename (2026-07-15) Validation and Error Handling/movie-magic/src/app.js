@@ -10,7 +10,14 @@ const SERVER_PORT = 5500;
 const app = express();
 
 // Setup Handlebars
-app.engine('hbs', handlebarsEngine({ extname: 'hbs' }));
+app.engine('hbs', handlebarsEngine({
+    extname: 'hbs',
+    helpers: {
+        setTitle (title) {
+            this.pageTitle = title
+        }
+    }
+}));
 app.set('view engine', 'hbs');
 app.set('views', './src/views');
 

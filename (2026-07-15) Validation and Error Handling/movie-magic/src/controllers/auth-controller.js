@@ -5,7 +5,7 @@ import { authGuard } from '../middlewares/auth-middleware.js';
 const authController = Router();
 
 authController.get('/register', authGuard.isGuest, (req, res) => {
-    res.render('auth/register', { pageTitle: 'Register' });
+    res.render('auth/register');
 });
 
 authController.post('/register', authGuard.isGuest, async (req, res) => {
@@ -16,7 +16,7 @@ authController.post('/register', authGuard.isGuest, async (req, res) => {
 });
 
 authController.get('/login', authGuard.isGuest, (req, res) => {
-    res.render('auth/login', { pageTitle: 'Login' });
+    res.render('auth/login');
 });
 
 authController.post('/login', authGuard.isGuest, async (req, res) => {

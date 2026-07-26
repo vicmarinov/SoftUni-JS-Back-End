@@ -9,7 +9,7 @@ movieController.get('/create', authGuard.isAuth, (req, res) => {
     const movieCategoriesList = Object.entries(MOVIE_CATEGORIES)
         .map(([code, title]) => ({ code, title }));
     
-    res.render('movies/create', { pageTitle: 'Add Movie Post', movieCategoriesList });
+    res.render('movies/create', { movieCategoriesList });
 });
 
 movieController.post('/create', authGuard.isAuth, async (req, res) => {
@@ -23,7 +23,7 @@ movieController.post('/create', authGuard.isAuth, async (req, res) => {
 movieController.get('/search', async (req, res) => {
     const filters = req.query;
     const movies = await movieService.getAll(filters);
-    res.render('movies/search', { pageTitle: 'Search Movies', filters, movies });
+    res.render('movies/search', { filters, movies });
 });
 
 movieController.get('/:movieId/attach-actor', authGuard.isAuth, async (req, res) => {
@@ -53,7 +53,7 @@ movieController.get('/:movieId/edit', authGuard.isAuth, async (req, res) => {
             isSelected: title === movie.category
         }));
 
-    res.render('movies/edit', { pageTitle: 'Edit Movie Post', movie, movieCategoriesList });
+    res.render('movies/edit', { movie, movieCategoriesList });
 });
 
 movieController.post('/:movieId/edit', authGuard.isAuth, async (req, res) => {

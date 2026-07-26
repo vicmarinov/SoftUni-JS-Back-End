@@ -5,7 +5,7 @@ import { authGuard } from '../middlewares/auth-middleware.js';
 const actorController = Router();
 
 actorController.get('/create', authGuard.isAuth, (req, res) => {
-    res.render('actors/create', { pageTitle: 'Add Actor Information' });
+    res.render('actors/create');
 });
 
 actorController.post('/create', authGuard.isAuth, async (req, res) => {

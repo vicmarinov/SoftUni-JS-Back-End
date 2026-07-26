@@ -12,7 +12,7 @@ routes.use('/movies', movieController);
 routes.use('/actors', actorController);
 
 routes.get('*anyOther', (req, res) => {
-    res.status(404).render('404', { pageTitle: 'Not Found' });
+    res.status(404).render('404');
 });
 
 export default routes;
