@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { userRepository } from '../repositories/user-repository.js';
 import { generateAuthToken } from '../utils/token-utils.js';
 
-async function registerUser ({ email, password, repeatPassword }) {
+async function registerUser ({ email, password }) {
     const passwordHash = await bcrypt.hash(password, 10);
     const user = await userRepository.create({ email, passwordHash });
 
