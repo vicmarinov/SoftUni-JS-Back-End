@@ -5,7 +5,7 @@ const actorCreateSchema = zod.object({
         .trim()
         .regex(/^[A-Za-z0-9 ]+$/, 'Name must contain only English letters, numbers and spaces')
         .min(5, 'Name must be at least 5 characters long'),
-    age: zod.coerce.number()
+    age: zod.coerce.number('Age must be a number')
         .min(1, 'Age must be a positive number')
         .max(120, 'Age must be a valid human age'),
     placeOfBirth: zod.string()

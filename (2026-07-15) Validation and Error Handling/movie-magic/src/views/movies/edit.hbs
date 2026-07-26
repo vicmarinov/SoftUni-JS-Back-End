@@ -12,7 +12,15 @@
             <ul class="noBullet">
                 <li>
                     <label for="title">Title:</label>
-                    <input type="text" class="inputFields" id="title" name="title" value="{{movie.title}}">
+                    <input type="text" class="inputFields" id="title" name="title" value="{{#if newMovieData.title}}{{newMovieData.title}}{{else}}{{movie.title}}{{/if}}">
+
+                    {{#if fieldErrorMessages.title}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.title as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="category">Category:</label>
@@ -21,30 +29,86 @@
                             {{>category}}
                         {{/each}}
                     </select>
+
+                    {{#if fieldErrorMessages.category}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.category as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="genre">Genre:</label>
-                    <input type="text" class="inputFields" id="genre" name="genre" value="{{movie.genre}}">
+                    <input type="text" class="inputFields" id="genre" name="genre" value="{{#if newMovieData.genre}}{{newMovieData.genre}}{{else}}{{movie.genre}}{{/if}}">
+
+                    {{#if fieldErrorMessages.genre}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.genre as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="director">Director:</label>
-                    <input type="text" class="inputFields" id="director" name="director" value="{{movie.director}}">
+                    <input type="text" class="inputFields" id="director" name="director" value="{{#if newMovieData.director}}{{newMovieData.director}}{{else}}{{movie.director}}{{/if}}">
+
+                    {{#if fieldErrorMessages.director}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.director as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="year">Year:</label>
-                    <input type="number" class="inputFields" id="year" name="year" value="{{movie.year}}">
+                    <input type="number" class="inputFields" id="year" name="year" value="{{#if newMovieData.year}}{{newMovieData.year}}{{else}}{{movie.year}}{{/if}}">
+
+                    {{#if fieldErrorMessages.year}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.year as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="imageURL">Movie Poster:</label>
-                    <input type="text" class="inputFields" id="imageURL" name="imageURL" value="{{movie.imageURL}}">
+                    <input type="text" class="inputFields" id="imageURL" name="imageURL" value="{{#if newMovieData.imageURL}}{{newMovieData.imageURL}}{{else}}{{movie.imageURL}}{{/if}}">
+
+                    {{#if fieldErrorMessages.imageURL}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.imageURL as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="rating">Rating:</label>
-                    <input type="text" class="inputFields" id="rating" name="rating" value="{{movie.rating}}">
+                    <input type="text" class="inputFields" id="rating" name="rating" value="{{#if newMovieData.rating}}{{newMovieData.rating}}{{else}}{{movie.rating}}{{/if}}">
+
+                    {{#if fieldErrorMessages.rating}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.rating as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li>
                     <label for="description">Description:</label>
-                    <textarea class="inputFields" id="description" name="description">{{movie.description}}</textarea>
+                    <textarea class="inputFields" id="description" name="description">{{#if newMovieData.description}}{{newMovieData.description}}{{else}}{{movie.description}}{{/if}}</textarea>
+
+                    {{#if fieldErrorMessages.description}}
+                        <div class="input-field-errors">
+                            {{#each fieldErrorMessages.description as |message|}}
+                                <p>{{message}}</p>
+                            {{/each}}
+                        </div>
+                    {{/if}}
                 </li>
                 <li id="center-btn">
                     <button id="edit-btn" type="submit">Edit</button>

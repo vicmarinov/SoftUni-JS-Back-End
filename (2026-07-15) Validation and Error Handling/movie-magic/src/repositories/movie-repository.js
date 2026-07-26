@@ -35,7 +35,11 @@ async function getMovieById (movieId) {
 }
 
 async function createMovie (newMovie) {
-    await prisma.movie.create({ data: newMovie });
+    try {
+        await prisma.movie.create({ data: newMovie });
+    } catch (error) {
+        throw new Error('Failed to create movie');
+    }
 }
 
 async function attachActorToMovieCast (movieId, actorId, roleName) {
@@ -44,11 +48,19 @@ async function attachActorToMovieCast (movieId, actorId, roleName) {
     });
 }
 
-async function editMovie (movieId, creatorId, editedFields) {
-    await prisma.movie.update({
-        where: { id: movieId, createdBy: creatorId },
-        data: editedFields
-    });
+async function editMovie (movieId, creatorId, newMovieData) {
+    try {
+        await prisma.movie.update({
+            where: { id: movieId, createdBy: creatorId },
+            data: newMovieData
+        });
+    } catch (error) {
+        if (error.code === 'P2025') {
+            throw new Error('Movie not found or you are not authorized to edit it');
+        }
+        
+        throw new Error('Failed to edit movie');
+    }
 }
 
 async function deleteMovie (movieId, creatorId) {

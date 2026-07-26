@@ -1,7 +1,9 @@
 import { Router } from 'express';
-import { MOVIE_CATEGORIES, movieService } from '../services/movie-service.js';
+import { movieService } from '../services/movie-service.js';
 import { actorService } from '../services/actor-service.js';
 import { authGuard } from '../middlewares/auth-middleware.js';
+import { MOVIE_CATEGORIES, movieSchema } from '../schemas/movie-schema.js';
+import { getErrorMessages } from '../utils/error-utils.js';
 
 const movieController = Router();
 
@@ -13,11 +15,29 @@ movieController.get('/create', authGuard.isAuth, (req, res) => {
 });
 
 movieController.post('/create', authGuard.isAuth, async (req, res) => {
-    const newMovie = req.body;
-    const userId = req.user.id;
-    await movieService.create(newMovie, userId);
+    try {
+        const newMovie = movieSchema.create.parse(req.body);
+        const userId = req.user.id;
+        await movieService.create(newMovie, userId);
+    
+        res.redirect('/');
+    } catch (error) {
+        const errorMessages = getErrorMessages(error);
 
-    res.redirect('/');
+        const movieCategoriesList = Object.entries(MOVIE_CATEGORIES)
+            .map(([code, title]) => ({
+                code,
+                title,
+                isSelected: code === req.body.category
+            }));
+        
+        res.render('movies/create', {
+            fieldErrorMessages: errorMessages.zodMessages,
+            notificationErrorMessage: errorMessages.singleMessage,
+            movieData: req.body,
+            movieCategoriesList
+        });
+    }
 });
 
 movieController.get('/search', async (req, res) => {
@@ -57,12 +77,30 @@ movieController.get('/:movieId/edit', authGuard.isAuth, async (req, res) => {
 });
 
 movieController.post('/:movieId/edit', authGuard.isAuth, async (req, res) => {
-    const movieId = req.params.movieId;
-    const userId = req.user.id;
-    const newMovieData = req.body;
+    try {
+        const movieId = req.params.movieId;
+        const userId = req.user.id;
+        const newMovieData = movieSchema.edit.parse(req.body);
+    
+        await movieService.edit(movieId, userId, newMovieData);
+        res.redirect(`/movies/${movieId}`);
+    } catch (error) {
+        const errorMessages = getErrorMessages(error);
 
-    await movieService.edit(movieId, userId, newMovieData);
-    res.redirect(`/movies/${movieId}`);
+        const movieCategoriesList = Object.entries(MOVIE_CATEGORIES)
+            .map(([code, title]) => ({
+                code,
+                title,
+                isSelected: code === req.body.category
+            }));
+
+        res.render('movies/edit', {
+            fieldErrorMessages: errorMessages.zodMessages,
+            notificationErrorMessage: errorMessages.singleMessage,
+            newMovieData: req.body,
+            movieCategoriesList
+        });
+    }
 });
 
 movieController.get('/:movieId/delete', authGuard.isAuth, async (req, res) => {
