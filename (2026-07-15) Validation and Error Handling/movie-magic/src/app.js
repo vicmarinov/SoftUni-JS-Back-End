@@ -25,7 +25,7 @@ app.set('views', './src/views');
 app.use(express.static('./src/public'));
 
 // Setup body parser
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 
 // Setup cookie parser
 app.use(cookieParser());
