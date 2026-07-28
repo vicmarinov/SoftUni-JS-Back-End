@@ -5,7 +5,7 @@ import routes from './routes.js';
 import cookieParser from 'cookie-parser';
 import { authMiddleware } from './middlewares/auth-middleware.js';
 
-const SERVER_PORT = 5500;
+const SERVER_PORT = process.env.SERVER_PORT;
 
 const app = express();
 
