@@ -14,7 +14,7 @@ authController.post('/register', authGuard.isGuest, async (req, res) => {
     try {
         const newUserData = userSchema.register.parse(req.body);
         const authToken = await authService.register(newUserData);
-        res.cookie('authToken', authToken);
+        res.cookie('authToken', authToken, { httpOnly: true, sameSite: 'lax' });
         res.redirect('/');
     } catch (error) {
         const errorMessages = getErrorMessages(error);
@@ -34,7 +34,7 @@ authController.post('/login', authGuard.isGuest, async (req, res) => {
     try {
         const userData = userSchema.login.parse(req.body);
         const authToken = await authService.login(userData);
-        res.cookie('authToken', authToken);
+        res.cookie('authToken', authToken, { httpOnly: true, sameSite: 'lax' });
         res.redirect('/');
     } catch (error) {
         const errorMessages = getErrorMessages(error);
