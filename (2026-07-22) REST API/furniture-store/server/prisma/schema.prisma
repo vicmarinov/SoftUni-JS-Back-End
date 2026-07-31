@@ -19,5 +19,25 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  furnitureItems Furniture[]
+
   @@map("users")
+}
+
+model Furniture {
+  id          String   @id @default(cuid())
+  make        String
+  model       String
+  year        Int
+  description String
+  price       Float
+  imageURL    String
+  material    String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  creator User @relation(fields: [createdBy], references: [id])
+
+  @@map("furniture")
 }
