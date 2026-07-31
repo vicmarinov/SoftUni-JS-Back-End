@@ -1,9 +1,17 @@
 import { prisma } from '../lib/prisma.js';
 
-export function create ({ email, passwordHash }) {
-    const user = prisma.user.create({
-        data: { email, passwordHash }
-    });
+export async function create ({ email, passwordHash }) {
+    try {
+        const user = await prisma.user.create({
+            data: { email, passwordHash }
+        });
+    
+        return user;
+    } catch (error) {
+        if (error.code === 'P2002') {
+            throw new Error('Email already exists');
+        }
 
-    return user;
+        throw new Error('Failed to create user');
+    }
 }
