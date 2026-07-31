@@ -13,7 +13,7 @@
             ],
             "runtimeExecutable": "npx",
             "runtimeArgs": [
-                "node",
+                "tsx",
                 "--watch"
             ],
             "program": "${workspaceFolder}/src/app.js"
