@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config';
 import routes from './routes.js';
 import cors from 'cors';
+import { authMiddleware } from './middlewares';
 
 const SERVER_PORT = process.env.SERVER_PORT || 3030;
 
@@ -12,6 +13,9 @@ app.use(cors());
 
 // Setup body parser
 app.use(express.json());
+
+// Setup authentication middleware
+app.use(authMiddleware);
 
 // Setup routes
 app.use(routes);
