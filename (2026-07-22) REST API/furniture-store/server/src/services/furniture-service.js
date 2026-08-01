@@ -1,5 +1,24 @@
 import { furnitureRepository } from '../repositories';
 
+export async function getAll () {
+    const allFurnitureItems = await furnitureRepository.getAll();
+    return allFurnitureItems.map(item => ({
+        _id: item.id,
+        img: item.imageURL,
+        ...item
+    }));
+}
+
+export async function getById (furnitureId) {
+    const furnitureItem = await furnitureRepository.getById(furnitureId);
+    return {
+        _id: furnitureItem.id,
+        _ownerId: furnitureItem.createdBy,
+        img: furnitureItem.imageURL,
+        ...furnitureItem
+    };
+}
+
 export async function create (
     {
         make,
