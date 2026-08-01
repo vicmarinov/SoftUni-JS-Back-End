@@ -16,3 +16,5 @@ export const create = zod.object({
     material: zod.string()
         .optional()
 }).transform(data => ({ imageURL: data.img, ...data }));
+
+export const update = create;

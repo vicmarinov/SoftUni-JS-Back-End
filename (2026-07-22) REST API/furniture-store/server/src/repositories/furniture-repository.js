@@ -29,6 +29,21 @@ export function getById (furnitureId) {
     }
 }
 
+export async function getCreator (furnitureId) {
+    try {
+        const furnitureCreator = (
+            await prisma.furniture.findUnique({
+                select: { creator: true },
+                where: { id: furnitureId }
+            })
+        ).creator;
+
+        return furnitureCreator;
+    } catch (error) {
+        throw new Error('Failed to retrieve furniture creator.');
+    }
+}
+
 export async function create ({
     make,
     model,
@@ -56,5 +71,41 @@ export async function create ({
         return furnitureItem;
     } catch (error) {
         throw new Error('Failed to create furniture item.');
+    }
+}
+
+export async function update (
+    furnitureId,
+    userId,
+    {
+        make,
+        model,
+        year,
+        description,
+        price,
+        imageURL,
+        material = undefined
+    }
+) {
+    try {
+        const updatedFurnitureItem = await prisma.furniture.update({
+            data: {
+                make,
+                model,
+                year,
+                description,
+                price,
+                imageURL,
+                material
+            },
+            where: {
+                id: furnitureId,
+                createdBy: userId
+            }
+        });
+
+        return updatedFurnitureItem;
+    } catch (error) {
+        throw new Error('Failed to update furniture item.');
     }
 }

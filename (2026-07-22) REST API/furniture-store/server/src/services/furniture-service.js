@@ -19,6 +19,11 @@ export async function getById (furnitureId) {
     };
 }
 
+export function getCreator (furnitureId) {
+    const furnitureCreator = furnitureRepository.getCreator(furnitureId);
+    return furnitureCreator;
+}
+
 export async function create (
     {
         make,
@@ -43,4 +48,34 @@ export async function create (
     };
 
     return furnitureRepository.create(furnitureData);
+}
+
+export function update (
+    furnitureId,
+    userId,
+    {
+        make,
+        model,
+        year,
+        description,
+        price,
+        imageURL,
+        material = undefined
+    }
+) {
+    const updatedFurnitureItem = furnitureRepository.update(
+        furnitureId,
+        userId,
+        {
+            make,
+            model,
+            year,
+            description,
+            price,
+            imageURL,
+            material
+        }
+    );
+
+    return updatedFurnitureItem;
 }

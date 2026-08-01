@@ -20,11 +20,25 @@ furnitureController.post('/', isAuth, async (req, res) => {
 
 furnitureController.get('/:furnitureId', async (req, res) => {
     const furnitureId = req.params.furnitureId;
-    
+
     const furnitureItem = await furnitureService.getById(furnitureId);
     if (!furnitureId) throw new Error('Cannot find furniture item.');
 
     res.json(furnitureItem);
+});
+
+furnitureController.put('/:furnitureId', isAuth, async (req, res) => {
+    const furnitureId = req.params.furnitureId;
+    const userId = req.user.id;
+
+    const furnitureCreator = await furnitureService.getCreator(furnitureId);
+    const isUserCreator = userId === furnitureCreator.id;
+    if (!isUserCreator) return res.status(401).json({ message: 'Unauthorized' });
+
+    const furnitureData = furnitureSchema.update.parse(req.body);
+
+    await furnitureService.update(furnitureId, userId, furnitureData);
+    res.json({ message: 'Furniture updated' });
 });
 
 export default furnitureController;
