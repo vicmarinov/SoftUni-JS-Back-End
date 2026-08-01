@@ -109,3 +109,16 @@ export async function update (
         throw new Error('Failed to update furniture item.');
     }
 }
+
+export async function remove (furnitureId, userId) {
+    try {
+        await prisma.furniture.delete({
+            where: {
+                id: furnitureId,
+                createdBy: userId
+            }
+        });
+    } catch (error) {
+        throw new Error('Failed to remove furniture item.');
+    }
+}

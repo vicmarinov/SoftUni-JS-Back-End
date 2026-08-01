@@ -79,3 +79,7 @@ export function update (
 
     return updatedFurnitureItem;
 }
+
+export function remove (furnitureId, userId) {
+    return furnitureRepository.remove(furnitureId, userId);
+}

@@ -41,4 +41,16 @@ furnitureController.put('/:furnitureId', isAuth, async (req, res) => {
     res.json({ message: 'Furniture updated' });
 });
 
+furnitureController.delete('/:furnitureId', isAuth, async (req, res) => {
+    const furnitureId = req.params.furnitureId;
+    const userId = req.user.id;
+
+    const furnitureCreator = await furnitureService.getCreator(furnitureId);
+    const isUserCreator = userId === furnitureCreator.id;
+    if (!isUserCreator) return res.status(401).json({ message: 'Unauthorized' });
+
+    await furnitureService.remove(furnitureId, userId);
+    res.json({ message: 'Furniture deleted' });
+});
+
 export default furnitureController;
