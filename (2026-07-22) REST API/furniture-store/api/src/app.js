@@ -24,6 +24,6 @@ app.use(routes);
 app.use(errorMiddleware);
 
 // Start the server
-app.listen(process.env.SERVER_PORT, () => {
+app.listen(SERVER_PORT, () => {
     console.log(`Server is listening on http://localhost:${SERVER_PORT}`);
 });

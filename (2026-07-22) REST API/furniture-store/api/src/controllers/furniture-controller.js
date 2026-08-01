@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { furnitureSchema } from '../schemas/index.js';
-import { isAuth } from '../middlewares/auth-middleware.js';
+import { furnitureSchema } from '../schemas';
+import { isAuth } from '../middlewares';
 import { furnitureService } from '../services';
 
 const furnitureController = Router();
@@ -26,7 +26,7 @@ furnitureController.get('/:furnitureId', async (req, res) => {
     const furnitureId = req.params.furnitureId;
 
     const furnitureItem = await furnitureService.getById(furnitureId);
-    if (!furnitureId) throw new Error('Cannot find furniture item.');
+    if (!furnitureItem) throw new Error('Cannot find furniture item.');
 
     res.json(furnitureItem);
 });
@@ -37,7 +37,7 @@ furnitureController.put('/:furnitureId', isAuth, async (req, res) => {
 
     const furnitureCreator = await furnitureService.getCreator(furnitureId);
     const isUserCreator = userId === furnitureCreator.id;
-    if (!isUserCreator) return res.status(401).json({ message: 'Unauthorized' });
+    if (!isUserCreator) return res.status(403).json({ message: 'Forbidden' });
 
     const furnitureData = furnitureSchema.update.parse(req.body);
 
@@ -51,7 +51,7 @@ furnitureController.delete('/:furnitureId', isAuth, async (req, res) => {
 
     const furnitureCreator = await furnitureService.getCreator(furnitureId);
     const isUserCreator = userId === furnitureCreator.id;
-    if (!isUserCreator) return res.status(401).json({ message: 'Unauthorized' });
+    if (!isUserCreator) return res.status(403).json({ message: 'Forbidden' });
 
     await furnitureService.remove(furnitureId, userId);
     res.json({ message: 'Furniture deleted' });
