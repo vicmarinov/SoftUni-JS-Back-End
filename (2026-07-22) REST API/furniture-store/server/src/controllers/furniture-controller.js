@@ -6,7 +6,11 @@ import { furnitureService } from '../services';
 const furnitureController = Router();
 
 furnitureController.get('/', async (req, res) => {
-    const allFurnitureItems = await furnitureService.getAll();
+    const creatorId = new URLSearchParams(req.query.where)
+        .get('_ownerId')
+        ?.replaceAll(/["']/g, '');
+
+    const allFurnitureItems = await furnitureService.getAll(creatorId);
     res.json(allFurnitureItems);
 });
 

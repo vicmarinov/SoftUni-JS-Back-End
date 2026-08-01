@@ -1,7 +1,7 @@
 import { furnitureRepository } from '../repositories';
 
-export async function getAll () {
-    const allFurnitureItems = await furnitureRepository.getAll();
+export async function getAll (creatorId = undefined) {
+    const allFurnitureItems = await furnitureRepository.getAll(creatorId);
     return allFurnitureItems.map(item => ({
         _id: item.id,
         img: item.imageURL,

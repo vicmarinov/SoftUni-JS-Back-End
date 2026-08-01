@@ -1,14 +1,15 @@
 import { prisma } from '../lib/prisma.js';
 
-export function getAll () {
+export async function getAll (creatorId = undefined) {
     try {
-        const allFurnitureItems = prisma.furniture.findMany({
+        const allFurnitureItems = await prisma.furniture.findMany({
             select: {
                 id: true,
                 description: true,
                 price: true,
                 imageURL: true
-            }
+            },
+            where: { createdBy: creatorId }
         });
     
         return allFurnitureItems;
@@ -17,9 +18,9 @@ export function getAll () {
     }
 }
 
-export function getById (furnitureId) {
+export async function getById (furnitureId) {
     try {
-        const furnitureItem = prisma.furniture.findUnique({
+        const furnitureItem = await prisma.furniture.findUnique({
             where: { id: furnitureId }
         });
     
