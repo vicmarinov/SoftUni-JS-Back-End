@@ -1,0 +1,29 @@
+{{ setTitle 'Dashboard' }}
+
+<main>
+  <div class="list-header">
+    <div class="section-title">All Missions</div>
+    <a href="/missions/add" class="btn-neon" style="font-size:11px;padding:9px 20px;">+ Add Mission</a>
+  </div>
+
+  {{#if missions.length}}
+    <ul class="card-wrapper">
+      {{#each missions as |mission|}}
+        <li class="glass-card card">
+          <img src="{{mission.imageUrl}}" alt="{{mission.name}}" />
+          <div class="card-body">
+            <div class="card-title">{{mission.name}}</div>
+            <p><strong>Destination: </strong><span>{{mission.destination}}</span></p>
+            <p><strong>Type: </strong><span>{{mission.type}}</span></p>
+            <p><strong>Crew: </strong><span>{{mission.crew}}</span></p>
+            <a href="/missions/{{mission.id}}" class="details-btn">Details →</a>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div id="no-post">
+      <h2>There are no space missions yet!</h2>
+    </div>
+  {{/if}}
+</main>

@@ -1,0 +1,66 @@
+{{ setTitle 'Details' }}
+
+<main class="details-page">
+  <div class="glass-card" id="details-wrapper">
+    <p id="details-title">🚀 {{missionData.name}}</p>
+    <div class="details-content">
+      <div id="img-wrapper">
+        <img src="{{missionData.imageUrl}}" alt="{{missionData.name}}" />
+        <div style="margin-top:12px;"><span class="badge badge-active">{{missionData.destination}}</span></div>
+      </div>
+      <div id="info-wrapper">
+        <div class="detail-row">
+          <div class="detail-field">
+            <div class="detail-field-label">Destination</div>
+            <div class="detail-field-value" id="details-destination">{{missionData.destination}}</div>
+          </div>
+          <div class="detail-field">
+            <div class="detail-field-label">Mission Type</div>
+            <div class="detail-field-value" id="details-type">{{missionData.type}}</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-field">
+            <div class="detail-field-label">Crew Members</div>
+            <div class="detail-field-value" id="details-crew">{{missionData.crew}} members</div>
+          </div>
+          <div class="detail-field">
+            <div class="detail-field-label">Launch Date</div>
+            <div class="detail-field-value" id="details-launch">{{missionData.launchDate}}</div>
+          </div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-field">
+            <div class="detail-field-label">Duration</div>
+            <div class="detail-field-value" id="details-duration">{{missionData.duration}}</div>
+          </div>
+          <div class="detail-field">
+            <div class="detail-field-label">Added by</div>
+            <div class="detail-field-value" id="details-owner">{{missionData.owner.email}}</div>
+          </div>
+        </div>
+        <div class="detail-field" style="margin-bottom:16px;">
+          <div class="detail-field-label">Supporters</div>
+          <div class="detail-field-value">{{missionData.supportList.length}} commanders</div>
+        </div>
+        <div class="detail-desc" id="details-description">
+          {{missionData.description}}
+        </div>
+      </div>
+    </div>
+    {{#if user}}
+      <div id="action-buttons">
+        {{#if isOwner}}
+          <a href="/missions/{{missionData.id}}/edit" id="edit-btn">✏️ Edit Mission</a>
+          <a href="/missions/{{missionData.id}}/delete" id="delete-btn">🗑️ Abort Mission</a>
+        {{else}}
+          {{#if canSupport}}
+            <a href="/missions/{{missionData.id}}/support" id="like-btn">⭐ Support Mission</a>
+          {{else}}
+            <p id="already-liked">⭐ You've already supported this mission!</p>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</main>

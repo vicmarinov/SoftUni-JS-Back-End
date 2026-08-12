@@ -1,0 +1,54 @@
+{{ setTitle 'Add Mission'}}
+
+<main class="create-page">
+  <div class="glass-card form-card">
+    <h2 class="form-title">🚀 Add New Mission</h2>
+    <p class="form-sub">Define the parameters for your new space mission</p>
+    <div class="neon-line"></div>
+    <form method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Mission Name</label>
+          <input type="text" class="form-input" name="name" placeholder="e.g. Mars Alpha Mission" value="{{missionData.name}}" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mission Type</label>
+          <input type="text" class="form-input" name="type" placeholder="e.g. Crewed Exploration" value="{{missionData.type}}" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Destination</label>
+          <select class="form-input" name="destination">
+            <option value="" selected disabled>Select destination...</option>
+            {{#each destinations}}
+              {{>destination-option}}
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="text" class="form-input" name="imageUrl" placeholder="https://..." value="{{missionData.imageUrl}}" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Crew Members</label>
+          <input type="number" class="form-input" name="crew" placeholder="0" min="0" value="{{missionData.crew}}" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Launch Date</label>
+          <input type="text" class="form-input" name="launchDate" placeholder="DD/MM/YYYY" value="{{missionData.launchDate}}" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration</label>
+          <input type="text" class="form-input" name="duration" placeholder="e.g. 18 months" value="{{missionData.duration}}" />
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Mission Description</label>
+          <textarea class="form-input" name="description" placeholder="Describe the mission objectives...">{{missionData.description}}</textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-neon">🚀 Launch Mission</button>
+        <a href="/missions" class="btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</main>

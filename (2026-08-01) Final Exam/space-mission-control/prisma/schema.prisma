@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+
+  ownedMissions     Mission[] @relation("MissionOwner")
+  supportedMissions Mission[] @relation("MissionSupporters")
+
+  @@map("users")
+}
+
+model Mission {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  destination String
+  imageUrl    String
+  crew        Int
+  launchDate  String
+  duration    String
+  description String
+  createdAt   DateTime @default(now())
+  ownerId     String
+
+  owner       User   @relation("MissionOwner", fields: [ownerId], references: [id])
+  supportList User[] @relation("MissionSupporters")
+
+  @@map("missions")
+}

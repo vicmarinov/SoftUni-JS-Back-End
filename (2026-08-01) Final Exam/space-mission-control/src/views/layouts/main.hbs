@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <title>{{#if pageTitle}}{{pageTitle}} — {{/if}}Space Mission Control</title>
+</head>
+
+<body>
+    {{#if errorMessage}}
+        <div>
+            <div class="errorContainer">
+                <p>{{errorMessage}}</p>
+            </div>
+        </div>
+    {{/if}}
+    
+    <div id="wrapper">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">🚀</div>SPACE CTRL
+            </div>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/missions">Dashboard</a>
+            </nav>
+            <div class="nav-actions">
+                {{#if user}}
+                    <div class="user">
+                        <a href="/missions/add" class="btn-outline" style="font-size:11px;padding:8px 18px;">+ Add Mission</a>
+                        <div class="user-chip">
+                            <div class="user-avatar">{{user.initial}}</div><span class="user-name">{{user.email}}</span>
+                        </div>
+                        <a href="/auth/logout" style="color:var(--text-muted);font-size:13px;text-decoration:none;">Logout</a>
+                    </div>
+                {{else}}
+                    <div class="guest">
+                        <a href="/auth/login" class="btn-outline" style="font-size:11px;padding:8px 18px;">Login</a>
+                        <a href="/auth/register" class="btn-neon" style="font-size:11px;padding:8px 18px;">Register</a>
+                    </div>
+                {{/if}}
+            </div>
+        </header>
+
+        {{{body}}}
+
+        <footer>Space Mission Control &copy; SoftUni JS Back-End Exam 2026</footer>
+    </div>
+    <script src="/js/stars.js"></script>
+</body>
+
+</html>
